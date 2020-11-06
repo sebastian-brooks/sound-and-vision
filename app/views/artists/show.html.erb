@@ -3,5 +3,8 @@
 <% end %>
 <h1><%= @artist.name %></h1>
 <h3><%= @artist.description %></h3>
-<h4><%= @artist.website %></h4>
-<%= link_to "Delete", artist_path(@artist), method: :delete, data: { confirm: "Are you sure?" } %>
+<h4><%= link_to @artist.website, @artist.website, target: :_blank %></h4>
+<% if @artist.user_id == current_user.id %>
+    <p><%= link_to "Edit", edit_artist_path(@artist) %></p>
+    <p><%= link_to "Delete", artist_path(@artist), method: :delete, data: { confirm: "Are you sure?" } %></p>
+<% end %>
