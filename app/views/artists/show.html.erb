@@ -1,3 +1,6 @@
+<% if @artist.image.attached? %>
+    <%= image_tag @artist.image, width: 200  %>
+<% end %>
 <h1><%= @artist.name %></h1>
 <h3><%= @artist.description %></h3>
 <h4><%= @artist.website %></h4>

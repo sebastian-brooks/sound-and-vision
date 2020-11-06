@@ -15,6 +15,10 @@
         <%= f.label :website %>
         <%= f.text_field :website %>
     </div>
+    <div>
+        <%= f.label :image %>
+        <%= f.file_field :image, accept: "image/png, image/jpg, image/jpeg" %>
+    </div>
     <%= f.hidden_field :user_id, value: current_user.id %>
     <div>
         <%= f.submit %>
