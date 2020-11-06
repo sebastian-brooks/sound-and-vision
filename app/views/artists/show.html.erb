@@ -1,2 +1,4 @@
-<h1>Artists#show</h1>
-<p>Find me in app/views/artists/show.html.erb</p>
+<h1><%= @artist.name %></h1>
+<h3><%= @artist.description %></h3>
+<h4><%= @artist.website %></h4>
+<%= link_to "Delete", artist_path(@artist), method: :delete, data: { confirm: "Are you sure?" } %>

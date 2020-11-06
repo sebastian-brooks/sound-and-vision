@@ -1,2 +1,37 @@
 <h1>ARTISTS</h1>
-<p><%= link_to "Create Artist Account", new_artist_path %></p>
+
+<h3><%= link_to "Create an artist account", new_artist_path %></h3>
+
+<% if current_user.has_role?(:artist) %>
+    <table>
+        <tr>
+            <th>MY ARTIST ACCOUNT</th>
+        </tr>
+        <% @user_artist.each do |artist| %>
+        <tr>
+            <td><%= link_to artist.name, artist_path(artist) %></td>
+        </tr>
+    <% end %>
+    </table>
+    <hr>
+<% end %>
+
+<table>
+    <tr>
+        <th>Artist Name</th>
+        <% if current_user.has_role?(:admin) %>
+            <th>Actions</th>
+        <% end %>
+    </tr>
+    <% @artists.each do |artist| %>
+    <tr>
+        <td><%= link_to artist.name, artist_path(artist) %></td>
+        <% if current_user.has_role?(:admin) %>
+            <td>
+                <%= link_to "Edit", edit_artist_path(artist) %>
+                <%= link_to "Delete", artist_path(artist), method: :delete, data: { confirm: "Are you sure?" } %>
+            </td>
+        <% end %>
+    </tr>
+<% end %>
+</table>

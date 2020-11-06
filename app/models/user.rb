@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   rolify
 
+  has_many :artists
+
   after_create :assign_default_role
 
   # Include default devise modules. Others available are:
