@@ -7,6 +7,13 @@ class ArtistsController < ApplicationController
   end
 
   def show
+    genres = []
+    if !@artist.songs.nil?
+      @artist.songs.each do |song|
+        genres << song.genres.pluck(:name)
+      end
+    end
+    @genres = genres.flatten.uniq.join(", ")
   end
 
   def new

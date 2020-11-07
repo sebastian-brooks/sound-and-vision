@@ -2,6 +2,7 @@
 <% if @artist.image.attached? %>
     <%= image_tag @artist.image, width: 200  %>
 <% end %>
+<h5><%= @genres %></h5>
 <h3>Artist Bio</h3>
 <p><%= @artist.description %></p>
 <h4><%= link_to @artist.website, @artist.website, target: :_blank %></h4>

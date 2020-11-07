@@ -24,6 +24,10 @@
         <%= f.select(:artist_id, @artists.map { |a| [a.name, a.id] }) %>
     </div>
     <div>
+        <%= f.label :genres %>
+        <%= f.collection_check_boxes :genre_ids, @genres, :id, :name %>
+    </div>
+    <div>
         <%= f.submit %>
     </div>
 <% end %>

@@ -3,6 +3,9 @@
     <%= image_tag @song.artist.image, width: 100  %>
 <% end %>
 <h4>by <%= link_to @song.artist.name, artist_path(@song.artist) %></h4>
+<h5>
+<%= @song.genres.pluck(:name).join(", ") %>
+</h5>
 <div>
     <% if @song.song_file.attached? %>
         <audio controls>
