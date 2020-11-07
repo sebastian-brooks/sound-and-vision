@@ -1,2 +1,21 @@
-<h1>Songs#show</h1>
-<p>Find me in app/views/songs/show.html.erb</p>
+<h1><%= @song.name %></h1>
+<% if @song.artist.image.attached? %>
+    <%= image_tag @song.artist.image, width: 100  %>
+<% end %>
+<h4>by <%= link_to @song.artist.name, artist_path(@song.artist) %></h4>
+<div>
+    <% if @song.song_file.attached? %>
+        <audio controls>
+            <source src=<%= url_for(@song.song_file) %> type="audio/mpeg">
+            <source src=<%= url_for(@song.song_file) %> type="audio/ogg">
+            <source src=<%= url_for(@song.song_file) %> type="audio/mpeg">
+        </audio>
+    <% end %>
+</div>
+<p><%= @song.description %></p>
+<h4>Price: $<%= "%.2f" % @song.price %></h4>
+<h4>Exclusive Purchase Price: $<%= "%.2f" % @song.exclusive_price %></h4>
+<% if @song.artist.user_id == current_user.id %>
+    <p><%= link_to "Edit", edit_song_path(@song) %></p>
+    <p><%= link_to "Delete", song_path(@song), method: :delete, data: { confirm: "Are you sure?" } %></p>
+<% end %>

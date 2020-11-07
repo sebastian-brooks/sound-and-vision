@@ -9,6 +9,7 @@
     <tr>
         <th>SONGS</th>
         <th></th>
+        <th></th>
         <% if current_user.has_role?(:admin) %>
             <th>Admin</th>
         <% end %>
@@ -21,6 +22,15 @@
             <% end %>
         </td>
         <td><%= link_to song.name, song_path(song) %> by <%= link_to song.artist.name, artist_path(song.artist) %></td>
+        <td>
+            <% if song.song_file.attached? %>
+                <audio controls>
+                    <source src=<%= url_for(song.song_file) %> type="audio/mpeg">
+                    <source src=<%= url_for(song.song_file) %> type="audio/ogg">
+                    <source src=<%= url_for(song.song_file) %> type="audio/mpeg">
+                </audio>
+            <% end %>
+        </td>
         <% if current_user.has_role?(:admin) %>
             <td>
                 <%= link_to "Edit", edit_song_path(song) %>
