@@ -1,10 +1,38 @@
+<h1><%= @artist.name %></h1>
 <% if @artist.image.attached? %>
     <%= image_tag @artist.image, width: 200  %>
 <% end %>
-<h1><%= @artist.name %></h1>
-<h3><%= @artist.description %></h3>
+<h3>Artist Bio</h3>
+<p><%= @artist.description %></p>
 <h4><%= link_to @artist.website, @artist.website, target: :_blank %></h4>
 <% if @artist.user_id == current_user.id %>
     <p><%= link_to "Edit", edit_artist_path(@artist) %></p>
     <p><%= link_to "Delete", artist_path(@artist), method: :delete, data: { confirm: "Are you sure?" } %></p>
 <% end %>
+<hr>
+<h2>Songs by <%= @artist.name %></h2>
+<table>
+    <tr>
+        <th>SONGS</th>
+        <th></th>
+        <% if current_user.has_role?(:artist) %>
+            <th>Actions</th>
+        <% end %>
+    </tr>
+    <% @artist.songs.each do |song| %>
+    <tr>
+        <td>
+            <% if @artist.image.attached? %>
+                <%= image_tag @artist.image, width: 50  %>
+            <% end %>
+        </td>
+        <td><%= link_to song.name, song_path(song) %> </td>
+        <% if current_user.has_role?(:artist) %>
+            <td>
+                <%= link_to "Edit", edit_song_path(song) %>
+                <%= link_to "Delete", song_path(song), method: :delete, data: { confirm: "Are you sure?" } %>
+            </td>
+        <% end %>
+    </tr>
+<% end %>
+</table>

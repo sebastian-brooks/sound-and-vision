@@ -1,0 +1,25 @@
+<%= form_with model: @song, local: true do |f| %>
+    <div>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+    </div>
+    <div>
+        <%= f.label :description %>
+        <%= f.text_area :description, size: '25x5' %>
+    </div>
+    <div>
+        <%= f.label :price %>
+        <%= f.number_field :price, step: 0.01 %>
+    </div>
+    <div>
+        <%= f.label :exclusive_price %>
+        <%= f.number_field :exclusive_price, step: 0.01 %>
+    </div>
+    <div>
+        <%= f.label :artist_id %>
+        <%= f.select(:artist_id, @artists.map { |a| [a.name, a.id] }) %>
+    </div>
+    <div>
+        <%= f.submit %>
+    </div>
+<% end %>

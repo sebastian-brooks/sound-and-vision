@@ -1,2 +1,32 @@
-<h1>Songs#index</h1>
-<p>Find me in app/views/songs/index.html.erb</p>
+<h1>SONGS</h1>
+
+<% if current_user.has_role?(:artist) %>
+    <h3><%= link_to "Upload a song", new_song_path %></h3>
+    <hr>
+<% end %>
+
+<table>
+    <tr>
+        <th>SONGS</th>
+        <th></th>
+        <% if current_user.has_role?(:admin) %>
+            <th>Admin</th>
+        <% end %>
+    </tr>
+    <% @songs.each do |song| %>
+    <tr>
+        <td>
+            <% if song.artist.image.attached? %>
+                <%= image_tag song.artist.image, width: 50  %>
+            <% end %>
+        </td>
+        <td><%= link_to song.name, song_path(song) %> by <%= link_to song.artist.name, artist_path(song.artist) %></td>
+        <% if current_user.has_role?(:admin) %>
+            <td>
+                <%= link_to "Edit", edit_song_path(song) %>
+                <%= link_to "Delete", song_path(song), method: :delete, data: { confirm: "Are you sure?" } %>
+            </td>
+        <% end %>
+    </tr>
+<% end %>
+</table>
