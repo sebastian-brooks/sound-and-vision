@@ -1,5 +1,7 @@
 class SongsController < ApplicationController
-  before_action :set_song, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token, only: [:buy]
+  before_action :authenticate_user!, except: [:buy]
+  before_action :set_song, only: [:show, :edit, :update, :destroy, :buy]
   before_action :set_user_artists, only: [:new, :edit]
   before_action :set_genres, only: [:show, :edit, :update, :new]
 
@@ -8,6 +10,41 @@ class SongsController < ApplicationController
   end
 
   def show
+  end
+
+  def buy
+    Stripe.api_key = ENV['STRIPE_API_KEY']
+
+    session = Stripe::Checkout::Session.create({
+        payment_method_types: ['card'],
+        mode: 'payment',
+        customer_email: current_user.email,
+        success_url: success_url(params[:id]),
+        cancel_url: cancel_url(params[:id]),
+        line_items: [
+          {
+            price_data: {
+              currency: 'aud',
+              product_data: {
+                name: @song.name,
+                description: "song by #{@song.artist.name} - #{@song.description}",
+                images: [url_for(@song.artist.image)]
+              },
+              unit_amount: (@song.price.to_f * 100).to_i
+            },
+            quantity: 1
+          }
+        ]
+    })
+
+    render json: session
+  end
+
+  def success
+  end
+
+  def cancel
+    render plain: "The transaction was cancelled!"
   end
 
   def new
