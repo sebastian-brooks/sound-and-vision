@@ -6,18 +6,22 @@
 <h5>
 <%= @song.genres.pluck(:name).join(", ") %>
 </h5>
-<div>
-    <% if @song.song_file.attached? %>
+<% if @song.song_file.attached? && @song.available %>
+    <div>
         <audio controls>
             <source src=<%= url_for(@song.song_file) %> type="audio/mpeg">
             <source src=<%= url_for(@song.song_file) %> type="audio/ogg">
             <source src=<%= url_for(@song.song_file) %> type="audio/mpeg">
         </audio>
-    <% end %>
-</div>
+    </div>
+<% end %>
 <p><%= @song.description %></p>
-<h4>Price: $<%= "%.2f" % @song.price %> <button id="buynow-button">BUY!</button></h4>
-<h4>Exclusive Purchase Price: $<%= "%.2f" % @song.exclusive_price %> <button id="excl-button">BUY!</button></h4>
+<% if @song.available %>
+    <h4>Price: $<%= "%.2f" % @song.price %> <button id="buynow-button">BUY!</button></h4>
+    <h4>Exclusive Purchase Price: $<%= "%.2f" % @song.exclusive_price %> <button id="excl-button">BUY!</button></h4>
+<% else %>
+    <h4>Song no longer available - already purchased exclusively</h4>
+<% end %>
 
 <script src="https://js.stripe.com/v3/"></script>
 
