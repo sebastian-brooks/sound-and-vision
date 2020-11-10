@@ -1,10 +1,22 @@
 class PagesController < ApplicationController
   before_action :check_roles, only: [:admin]
+  before_action :authenticate_user!, except: [:index]
 
   def index
   end
 
   def admin
+  end
+
+  def search
+    if params[:search].blank?
+      redirect_to(root_path, alert: "Empty field!") and return
+    else
+      # @parameter = params[:search].downcase
+      # @results = Artist.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
+      @search = params[:search]
+      @results = Song.joins(:artist).search(params[:search]).order(:name)
+    end
   end
 
   private

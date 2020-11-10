@@ -10,23 +10,7 @@
   </head>
 
   <body>
-    <% if user_signed_in? %>
-      <h3>
-        <%= link_to "HOME", root_path %>
-        | <%= link_to "ARTISTS", artists_path %>
-        | <%= link_to "SONGS", songs_path %>
-        | <%= link_to "ADMIN", admin_path %>
-        | <%= link_to "ACCOUNT", edit_user_registration_path %>
-        | <%= link_to "LOG OUT", destroy_user_session_path, method: :delete %>
-        | Signed in as <%= "#{current_user.first_name} #{current_user.last_name} (#{current_user.email})"%>
-      </h3>
-    <% else %>
-      <h3>
-        Welcome!
-        | <%= link_to "LOGIN", new_user_session_path %>
-        | <%= link_to "SIGN UP", new_user_registration_path %>
-      </h3>
-    <% end %>
+    <%= render partial: "shared/nav" %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
