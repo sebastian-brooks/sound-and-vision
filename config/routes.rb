@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   get "pages/index"
   get "/admin", to: "pages#admin", as: "admin"
 
-  post "/songs/:id/buy", to: "songs#buy", as: "buy"
-  get "/songs/:id/success", to: "songs#success", as: "success"
+  post "/songs/:id/:type/buy", to: "songs#buy", as: "buy"
+  get "/songs/:id/:type/success", to: "songs#success", as: "success"
   get "/songs/:id/cancel", to: "songs#cancel", as: "cancel"
 
   post '/search', to: 'pages#search', as: 'search'

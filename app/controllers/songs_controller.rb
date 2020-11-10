@@ -13,24 +13,32 @@ class SongsController < ApplicationController
   end
 
   def buy
+    price = nil
+
+    if params[:type] == "1"
+      price = @song.price
+    elsif params[:type] == "2"
+      price = @song.exclusive_price
+    end
+    
     Stripe.api_key = ENV['STRIPE_API_KEY']
 
     session = Stripe::Checkout::Session.create({
         payment_method_types: ['card'],
         mode: 'payment',
         customer_email: current_user.email,
-        success_url: success_url(params[:id]),
+        success_url: success_url(params[:id], params[:type]),
         cancel_url: cancel_url(params[:id]),
         line_items: [
           {
             price_data: {
               currency: 'aud',
               product_data: {
-                name: @song.name,
-                description: "song by #{@song.artist.name} - #{@song.description}",
+                name: "#{@song.name} - song by #{@song.artist.name}",
+                description: @song.description,
                 images: [url_for(@song.artist.image)]
               },
-              unit_amount: (@song.price.to_f * 100).to_i
+              unit_amount: (price.to_f * 100).to_i
             },
             quantity: 1
           }
@@ -42,6 +50,9 @@ class SongsController < ApplicationController
 
   def success
     @song.increment!(:purchases)
+    if params[:type] == "2"
+      @song.update_attribute(:available, false)
+    end
   end
 
   def cancel
