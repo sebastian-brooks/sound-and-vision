@@ -41,6 +41,7 @@ class SongsController < ApplicationController
   end
 
   def success
+    @song.increment!(:purchases)
   end
 
   def cancel
