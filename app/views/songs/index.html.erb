@@ -7,12 +7,10 @@
 
 <table>
     <tr>
-        <th>SONGS</th>
         <th></th>
-        <th></th>
-        <% if current_user.has_role?(:admin) %>
-            <th>Admin</th>
-        <% end %>
+        <th>Artist</th>
+        <th>Song</th>
+        <th>Tags</th>
     </tr>
     <% @songs.each do |song| %>
     <tr>
@@ -21,22 +19,9 @@
                 <%= image_tag song.artist.image, width: 50  %>
             <% end %>
         </td>
-        <td><%= link_to song.name, song_path(song) %> by <%= link_to song.artist.name, artist_path(song.artist) %></td>
-        <td>
-            <% if song.song_file.attached? %>
-                <audio controls>
-                    <source src=<%= url_for(song.song_file) %> type="audio/mpeg">
-                    <source src=<%= url_for(song.song_file) %> type="audio/ogg">
-                    <source src=<%= url_for(song.song_file) %> type="audio/mpeg">
-                </audio>
-            <% end %>
-        </td>
-        <% if current_user.has_role?(:admin) %>
-            <td>
-                <%= link_to "Edit", edit_song_path(song) %>
-                <%= link_to "Delete", song_path(song), method: :delete, data: { confirm: "Are you sure?" } %>
-            </td>
-        <% end %>
+        <td><%= link_to song.artist.name, artist_path(song.artist) %></td>
+        <td><%= link_to song.name, song_path(song) %></td>
+        <td><h5><%= song.genres.pluck(:name).join(", ") %></h5></td>
     </tr>
 <% end %>
 </table>

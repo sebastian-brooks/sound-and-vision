@@ -26,9 +26,6 @@
     <tr>
         <th>ARTISTS</th>
         <th></th>
-        <% if current_user.has_role?(:admin) %>
-            <th>Actions</th>
-        <% end %>
     </tr>
     <% @artists.each do |artist| %>
     <tr>
@@ -38,12 +35,6 @@
             <% end %>
         </td>
         <td><%= link_to artist.name, artist_path(artist) %></td>
-        <% if current_user.has_role?(:admin) %>
-            <td>
-                <%= link_to "Edit", edit_artist_path(artist) %>
-                <%= link_to "Delete", artist_path(artist), method: :delete, data: { confirm: "Are you sure?" } %>
-            </td>
-        <% end %>
     </tr>
 <% end %>
 </table>

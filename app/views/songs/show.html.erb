@@ -19,6 +19,12 @@
 <% if @song.available %>
     <h4>Price: $<%= "%.2f" % @song.price %> <button id="buynow-button">BUY!</button></h4>
     <h4>Exclusive Purchase Price: $<%= "%.2f" % @song.exclusive_price %> <button id="excl-button">BUY!</button></h4>
+    <p>
+        Exclusive purchase prices are higher because once you purchase this song, it is no longer available for other users to buy - it is uniquely yours!
+        <br>
+        The artist grants you full use of this song provided you credit them as the composer.
+    </p>
+
 <% else %>
     <h4>Song no longer available - already purchased exclusively</h4>
 <% end %>
