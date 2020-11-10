@@ -11,38 +11,38 @@
     <p><%= link_to "Delete", artist_path(@artist), method: :delete, data: { confirm: "Are you sure?" } %></p>
 <% end %>
 <hr>
-<h2>Songs by <%= @artist.name %></h2>
+<h2>Avialable songs by <%= @artist.name %>:</h2>
 <table>
     <tr>
-        <th>SONGS</th>
-        <th></th>
-        <% if current_user.has_role?(:artist) %>
-            <th>Actions</th>
-        <% end %>
+        <th>SONG </th>
+        <th>DESCRIPTION </th>
+        <th>TAGS</th>
     </tr>
     <% @artist.songs.each do |song| %>
+        <tr>
+            <% if song.available %>
+                <td><%= link_to song.name, song_path(song) %></td>
+                <td><%= song.description %></td>
+                <td><h5><%= song.genres.pluck(:name).join(", ") %></h5></td>
+            <% end %>
+        </tr>
+    <% end %>
+</table>
+
+<h2>Purchased Songs:</h2>
+<table>
     <tr>
-        <td>
-            <% if @artist.image.attached? %>
-                <%= image_tag @artist.image, width: 50  %>
-            <% end %>
-        </td>
-        <td>
-            <%= link_to song.name, song_path(song) %>
-            <% if song.song_file.attached? %>
-                <audio controls>
-                    <source src=<%= url_for(song.song_file) %> type="audio/mpeg">
-                    <source src=<%= url_for(song.song_file) %> type="audio/ogg">
-                    <source src=<%= url_for(song.song_file) %> type="audio/mpeg">
-                </audio>
-            <% end %>
-        </td>
-        <% if @artist.user_id == current_user.id %>
-            <td>
-                <%= link_to "Edit", edit_song_path(song) %>
-                <%= link_to "Delete", song_path(song), method: :delete, data: { confirm: "Are you sure?" } %>
-            </td>
-        <% end %>
+        <th>SONG </th>
+        <th>DESCRIPTION </th>
+        <th>TAGS</th>
     </tr>
-<% end %>
+    <% @artist.songs.each do |song| %>
+        <tr>
+            <% if !song.available %>
+                <td><%= link_to song.name, song_path(song) %></td>
+                <td><%= song.description %></td>
+                <td><h5><%= song.genres.pluck(:name).join(", ") %></h5></td>
+            <% end %>
+        </tr>
+    <% end %>
 </table>
