@@ -1,3 +1,5 @@
-<h1>Payment Successful</h1>
+<h2>Payment Successful!</h2>
+<h3>Thank you for buying <%= @song.name %> by <%= @song.artist.name %></h3>
+<%= link_to "Download #{@song.name}", rails_blob_path(@song.song_file, disposition: 'attachment') %>
 <p>You should receive an email with a link to download the purchased song in the next 10 minutes</p>
 <h3><%= link_to "Return to Song List", songs_path %></h3>

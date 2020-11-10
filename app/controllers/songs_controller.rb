@@ -1,7 +1,7 @@
 class SongsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:buy]
   before_action :authenticate_user!, except: [:buy]
-  before_action :set_song, only: [:show, :edit, :update, :destroy, :buy]
+  before_action :set_song, only: [:show, :edit, :update, :destroy, :buy, :success]
   before_action :set_user_artists, only: [:new, :edit]
   before_action :set_genres, only: [:show, :edit, :update, :new]
 
