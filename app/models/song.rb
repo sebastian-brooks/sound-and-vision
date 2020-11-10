@@ -8,6 +8,8 @@ class Song < ApplicationRecord
   attribute :purchases, default: 0
   attribute :available, default: true
 
+  validates :song_file, :presence => true
+
   def self.search(search)
     where("lower(artists.name) LIKE :search OR lower(songs.name) LIKE :search", search: "%#{search.downcase}%")
   end

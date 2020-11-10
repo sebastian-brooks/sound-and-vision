@@ -6,7 +6,7 @@ class SongsController < ApplicationController
   before_action :set_genres, only: [:show, :edit, :update, :new]
 
   def index
-    @songs = Song.all
+    @songs = Song.where(available: true)
   end
 
   def show
@@ -65,7 +65,12 @@ class SongsController < ApplicationController
 
   def create
     song = Song.create(song_params)
-    redirect_to song_path(song)
+    if song.id.nil?
+      flash[:alert] = song.errors.full_messages.join().capitalize
+      redirect_to new_song_path(song)
+    else
+      redirect_to song_path(song)
+    end
   end
 
   def edit
