@@ -5,6 +5,7 @@
 <h5><%= @genres %></h5>
 <h3>Artist Bio</h3>
 <p><%= @artist.description %></p>
+<p>Purchases: <%= @purchases %></p>
 <h4><%= link_to @artist.website, @artist.website, target: :_blank %></h4>
 <% if @artist.user_id == current_user.id %>
     <p><%= link_to "Edit", edit_artist_path(@artist) %></p>
@@ -17,6 +18,7 @@
         <th>SONG </th>
         <th>DESCRIPTION </th>
         <th>TAGS</th>
+        <th>PURCHASES</th>
     </tr>
     <% @artist.songs.each do |song| %>
         <tr>
@@ -24,6 +26,7 @@
                 <td><%= link_to song.name, song_path(song) %></td>
                 <td><%= song.description %></td>
                 <td><h5><%= song.genres.pluck(:name).join(", ") %></h5></td>
+                <td><%= song.purchases %></td>
             <% end %>
         </tr>
     <% end %>
@@ -35,6 +38,7 @@
         <th>SONG </th>
         <th>DESCRIPTION </th>
         <th>TAGS</th>
+        <th>PURCHASES</th>
     </tr>
     <% @artist.songs.each do |song| %>
         <tr>
@@ -42,6 +46,7 @@
                 <td><%= link_to song.name, song_path(song) %></td>
                 <td><%= song.description %></td>
                 <td><h5><%= song.genres.pluck(:name).join(", ") %></h5></td>
+                <td><%= song.purchases %></td>
             <% end %>
         </tr>
     <% end %>

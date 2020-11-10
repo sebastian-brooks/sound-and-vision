@@ -16,6 +16,7 @@
     </div>
 <% end %>
 <p><%= @song.description %></p>
+<p>Purchases: <%= @song.purchases %></p>
 <% if @song.available %>
     <h4>Price: $<%= "%.2f" % @song.price %> <button id="buynow-button">BUY!</button></h4>
     <h4>Exclusive Purchase Price: $<%= "%.2f" % @song.exclusive_price %> <button id="excl-button">BUY!</button></h4>

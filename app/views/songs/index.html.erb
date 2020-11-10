@@ -11,6 +11,7 @@
         <th>Artist</th>
         <th>Song</th>
         <th>Tags</th>
+        <th>Purchases</th>
     </tr>
     <% @songs.each do |song| %>
     <tr>
@@ -22,6 +23,7 @@
         <td><%= link_to song.artist.name, artist_path(song.artist) %></td>
         <td><%= link_to song.name, song_path(song) %></td>
         <td><h5><%= song.genres.pluck(:name).join(", ") %></h5></td>
+        <td><%= song.purchases %></td>
     </tr>
 <% end %>
 </table>
