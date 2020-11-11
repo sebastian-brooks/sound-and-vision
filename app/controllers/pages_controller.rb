@@ -19,6 +19,9 @@ class PagesController < ApplicationController
     end
   end
 
+  def purchases
+  end
+
   private
 
   def check_roles
