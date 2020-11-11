@@ -12,7 +12,7 @@
     <p><%= link_to "Delete", artist_path(@artist), method: :delete, data: { confirm: "Are you sure?" } %></p>
 <% end %>
 <hr>
-<h2>Avialable songs by <%= @artist.name %>:</h2>
+<h2>Available songs by <%= @artist.name %>:</h2>
 <table>
     <tr>
         <th>SONG </th>
@@ -32,7 +32,7 @@
     <% end %>
 </table>
 
-<h2>Purchased Songs:</h2>
+<h2>Exclusively Purchased Songs:</h2>
 <table>
     <tr>
         <th>SONG </th>
