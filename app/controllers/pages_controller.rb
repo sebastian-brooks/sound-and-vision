@@ -20,6 +20,11 @@ class PagesController < ApplicationController
   end
 
   def purchases
+    @user_songs = nil
+    usr_songs = current_user.songs
+    if usr_songs.size > 0
+      @user_songs = usr_songs
+    end
   end
 
   private

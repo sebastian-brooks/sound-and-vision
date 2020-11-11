@@ -53,6 +53,7 @@ class SongsController < ApplicationController
     if params[:type] == "2"
       @song.update_attribute(:available, false)
     end
+    UserSong.create(user_id: current_user.id, song_id: @song.id)
   end
 
   def cancel

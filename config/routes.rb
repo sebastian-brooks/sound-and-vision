@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   get "/songs/:id/:type/success", to: "songs#success", as: "success"
   get "/songs/:id/cancel", to: "songs#cancel", as: "cancel"
 
-  get "/users/:id/purchases", to: "pages#purchases", as: "purchases"
+  get "/purchases", to: "pages#purchases", as: "purchases"
 end

@@ -5,6 +5,9 @@ class Song < ApplicationRecord
   has_many :songs_genre, dependent: :destroy
   has_many :genres, through: :songs_genre
 
+  has_many :user_song, dependent: :destroy
+  has_many :users, through: :user_song
+
   attribute :purchases, default: 0
   attribute :available, default: true
 

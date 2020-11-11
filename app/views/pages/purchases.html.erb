@@ -1,0 +1,22 @@
+<h1>PURCHASED SONGS</h1>
+
+<table>
+    <tr>
+        <th></th>
+        <th>Artist</th>
+        <th>Song</th>
+        <th>Download</th>
+    </tr>
+    <% @user_songs.each do |song| %>
+        <tr>
+            <td>
+                <% if song.artist.image.attached? %>
+                    <%= image_tag song.artist.image, width: 50  %>
+                <% end %>
+            </td>
+            <td><%= link_to song.artist.name, artist_path(song.artist) %></td>
+            <td><%= song.name %></td>
+            <td><%= link_to "Download", rails_blob_path(song.song_file, disposition: 'attachment') %></td>
+        </tr>
+    <% end %>
+</table>
