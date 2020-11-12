@@ -1,7 +1,7 @@
 class SongsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:buy]
   before_action :authenticate_user!, except: [:buy]
-  before_action :set_song, only: [:show, :edit, :update, :destroy, :buy, :success]
+  before_action :set_song, except: [:index, :new, :create]
   before_action :set_user_artists, only: [:new, :edit]
   before_action :set_genres, only: [:show, :edit, :update, :new]
 
@@ -10,6 +10,10 @@ class SongsController < ApplicationController
   end
 
   def show
+    @purchased = true if @song.purchases >= 1
+    @user_owned = true if current_user.songs.include?(@song)
+    @sole_owner = true if @song.users.size == 1 && @song.user_ids.include?(current_user.id)
+    @song_genres = @song.genres.pluck(:name).join(", ")
   end
 
   def buy
@@ -49,19 +53,19 @@ class SongsController < ApplicationController
   end
 
   def success
-    @song.increment!(:purchases)
-
-    if params[:type] == "2"
+    if params[:type] == "2" && @song.available
       @song.update_attribute(:available, false)
     end
     
-    UserSong.create(user_id: current_user.id, song_id: @song.id)
+    if !current_user.songs.include?(@song)
+      @song.increment!(:purchases)
+      UserSong.create(user_id: current_user.id, song_id: @song.id)
+    end
     
     UserMailer.purchase_email(current_user, @song).deliver
   end
 
   def cancel
-    render plain: "The transaction was cancelled!"
   end
 
   def new

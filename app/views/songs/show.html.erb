@@ -4,8 +4,9 @@
 <% end %>
 <h4>by <%= link_to @song.artist.name, artist_path(@song.artist) %></h4>
 <h5>
-<%= @song.genres.pluck(:name).join(", ") %>
+<%= @song_genres %>
 </h5>
+
 <% if @song.song_file.attached? && @song.available %>
     <div>
         <audio controls>
@@ -15,22 +16,31 @@
         </audio>
     </div>
 <% end %>
+
 <p><%= @song.description %></p>
+
 <p>Purchases: <%= @song.purchases %></p>
+
 <% if @song.available %>
-    <h4>Price: $<%= "%.2f" % @song.price %> <button id="buynow">BUY!</button></h4>
-    <% if @song.purchases == 0 %>
+    <% if @user_owned && !@sole_owner %>
+        <h4>Already purchased on <%= current_user.user_song.first.created_at %></h4>
+    <% elsif !@user_owned %>
+        <h4>Price: $<%= "%.2f" % @song.price %> <button id="buynow">BUY!</button></h4>
+    <% end %>
+    <% if (@purchased && @user_owned && @sole_owner) || !@purchased %>
         <h4>Exclusive Purchase Price: $<%= "%.2f" % @song.exclusive_price %> <button id="excl">BUY!</button></h4>
         <p>
             Exclusive purchase prices are higher because once you purchase this song, it is no longer available for other users to buy - it is uniquely yours!
             <br>
             The artist grants you full use of this song provided you credit them as the composer.
         </p>
-    <% else %>
+    <% elsif (@purchased && @user_owned && @song.purchases > 1) || (@purchased && !@user_owned) %>
         <p>Exclusive purchase unavailable</p>
     <% end %>
-<% else %>
+<% elsif !@song.available && !@user_owned %>
     <h4>Song no longer available - already purchased exclusively</h4>
+<% elsif !@song.available && @user_owned %>
+    <h4>Congratulations - you already own this song exclusively!</h4>
 <% end %>
 
 <script src="https://js.stripe.com/v3/"></script>
