@@ -25,6 +25,14 @@ class ArtistsController < ApplicationController
 
   def create
     artist = Artist.create(artist_params)
+    if !artist.image.attached?
+      artist.image.attach(
+        io: File.open("app/assets/images/artist.png"),
+        filename: "artist.png",
+        content_type: "image/png",
+        identify: false
+      )
+    end
     current_user.add_role(:artist)
     redirect_to artist_path(artist)
   end
