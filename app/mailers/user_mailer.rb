@@ -1,8 +1,9 @@
 class UserMailer < ApplicationMailer
-    default from: "mucor.music@gmail.com"
+    default from: "admin@sound-and-vision.com"
 
-    def sample_email(user)
+    def purchase_email(user, song)
         @user = user
-        mail(to: @user.email, subject: 'Sample Email')
+        @song = song
+        mail(to: @user.email, from: "purchases@sound-and-vision.com", subject: 'Thank you for your purchase!')
     end
 end

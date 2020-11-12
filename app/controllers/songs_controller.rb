@@ -57,8 +57,7 @@ class SongsController < ApplicationController
     
     UserSong.create(user_id: current_user.id, song_id: @song.id)
     
-    @user = current_user
-    UserMailer.sample_email(@user).deliver
+    UserMailer.purchase_email(current_user, @song).deliver
   end
 
   def cancel

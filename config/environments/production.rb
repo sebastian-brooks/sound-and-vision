@@ -62,6 +62,19 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.default_url_options = { host: 'sound-and-vision-mkt.herokuapp.com', port: 3000 }
+
+  ActionMailer::Base.mailgun_settings = {
+    :port           => 587,
+    :address        => "smtp.mailgun.org",
+    :api_key        => ENV['MAILGUN_API_KEY'],
+    :domain         => ENV['MAILGUN_DOMAIN'],
+    :user_name      => ENV['MAILGUN_USERNAME'],
+    :password       => ENV['MAILGUN_PASSWORD'],
+    :authentication => :plain,
+  }
+  config.action_mailer.delivery_method = :mailgun
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
