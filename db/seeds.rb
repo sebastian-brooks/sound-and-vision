@@ -7,13 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.destroy_all
-user = User.new
-user.email = "seed@sound-vision.com"
-user.first_name = "Seeded Admin"
-user.last_name = "User"
-user.password = "password"
-# user.password_confirmation = "password"
-user.save!
+User.create!(
+    email: "seed@sound-vision.com",
+    password: "password",
+    first_name: "Seeded Admin",
+    last_name: "User"
+)
 User.find(1).add_role(:admin)
 User.find(1).add_role(:artist)
 
