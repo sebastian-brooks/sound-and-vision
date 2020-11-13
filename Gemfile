@@ -62,5 +62,3 @@ gem "dotenv-rails", "~> 2.7"
 gem "aws-sdk-s3", "~> 1.83"
 
 gem "stripe", "~> 5.28"
-
-gem "mailgun-ruby", "~> 1.2"
