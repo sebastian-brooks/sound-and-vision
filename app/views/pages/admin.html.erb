@@ -1,2 +1,6 @@
-<h1>ADMINISTRATION ACCESS</h1>
-<p>Top secret content for admins only</p>
+<h1>ADMINISTRATION</h1>
+<h4>User Management</h4>
+
+<% @users.each do |user| %>
+    <p><%= user.first_name %> <%= user.last_name %> (<%= user.email %>): <%= user.roles.pluck(:name).join(", ") %></p>
+<% end %>

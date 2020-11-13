@@ -12,7 +12,7 @@ user.email = "seed@sound-vision.com"
 user.first_name = "Seeded Admin"
 user.last_name = "User"
 user.password = "password"
-user.password_confirmation = "password"
+# user.password_confirmation = "password"
 user.save!
 User.find(1).add_role(:admin)
 User.find(1).add_role(:artist)

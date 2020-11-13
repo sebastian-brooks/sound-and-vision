@@ -6,6 +6,7 @@ class PagesController < ApplicationController
   end
 
   def admin
+    @users = User.all.where("id <> #{current_user.id}").first(25)
   end
 
   def search
@@ -15,7 +16,7 @@ class PagesController < ApplicationController
       # @parameter = params[:search].downcase
       # @results = Artist.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
       @search = params[:search]
-      @results = Song.joins(:artist).search(params[:search]).order(:name)
+      @results = Song.joins(:artist).search(params[:search]).order(:name).first(25)
     end
   end
 

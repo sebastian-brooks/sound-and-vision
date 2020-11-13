@@ -6,7 +6,7 @@ class SongsController < ApplicationController
   before_action :set_genres, only: [:show, :edit, :update, :new]
 
   def index
-    @songs = Song.where(available: true)
+    @songs = Song.where(available: true).first(25)
   end
 
   def show
