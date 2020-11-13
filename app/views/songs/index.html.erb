@@ -1,6 +1,6 @@
 <h1>SONGS</h1>
 
-<% if current_user.has_role?(:artist) %>
+<% if user_signed_in? && current_user.has_role?(:artist) %>
     <h3><%= link_to "Upload a song", new_song_path %></h3>
     <hr>
 <% end %>

@@ -1,7 +1,7 @@
 class ArtistsController < ApplicationController
   before_action :set_artist, only: [:show, :edit, :update, :destroy]
   before_action :set_user_artist, only: [:index]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @artists = Artist.all.first(25)
@@ -57,7 +57,7 @@ class ArtistsController < ApplicationController
   end
 
   def set_user_artist
-    if current_user.has_role?(:artist)
+    if user_signed_in? && current_user.has_role?(:artist)
       @user_artist = Artist.where(user_id: current_user)
     end
   end

@@ -7,7 +7,7 @@
 <p><%= @artist.description %></p>
 <p>Purchases: <%= @purchases %></p>
 <h4><%= link_to @artist.website, @artist.website, target: :_blank %></h4>
-<% if @artist.user_id == current_user.id %>
+<% if user_signed_in? && @artist.user_id == current_user.id %>
     <p><%= link_to "Edit", edit_artist_path(@artist) %></p>
     <p><%= link_to "Delete", artist_path(@artist), method: :delete, data: { confirm: "Are you sure?" } %></p>
 <% end %>

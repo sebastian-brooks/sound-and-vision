@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_action :check_roles, only: [:admin]
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :search]
 
   def index
   end
