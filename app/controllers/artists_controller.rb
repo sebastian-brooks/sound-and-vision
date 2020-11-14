@@ -25,16 +25,22 @@ class ArtistsController < ApplicationController
 
   def create
     artist = Artist.create(artist_params)
-    if !artist.image.attached?
-      artist.image.attach(
-        io: File.open("app/assets/images/artist.png"),
-        filename: "artist.png",
-        content_type: "image/png",
-        identify: false
-      )
+
+    if artist.id.nil?
+      flash[:alert] = artist.errors.full_messages.join(" | ").upcase
+      redirect_to new_artist_path
+    else
+      if !artist.image.attached?
+        artist.image.attach(
+          io: File.open("app/assets/images/artist.png"),
+          filename: "artist.png",
+          content_type: "image/png",
+          identify: false
+        )
+      end
+      current_user.add_role(:artist)
+      redirect_to artist_path(artist)
     end
-    current_user.add_role(:artist)
-    redirect_to artist_path(artist)
   end
 
   def edit

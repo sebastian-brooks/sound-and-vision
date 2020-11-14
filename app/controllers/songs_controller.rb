@@ -76,7 +76,7 @@ class SongsController < ApplicationController
   def create
     song = Song.create(song_params)
     if song.id.nil?
-      flash[:alert] = song.errors.full_messages.join().capitalize
+      flash[:alert] = song.errors.full_messages.join(" | ").upcase
       redirect_to new_song_path(song)
     else
       redirect_to song_path(song)

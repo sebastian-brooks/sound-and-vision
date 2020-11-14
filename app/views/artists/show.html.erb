@@ -5,49 +5,36 @@
 <h5><%= @genres %></h5>
 <h3>Artist Bio</h3>
 <p><%= @artist.description %></p>
-<p>Purchases: <%= @purchases %></p>
 <h4><%= link_to @artist.website, @artist.website, target: :_blank %></h4>
 <% if user_signed_in? && @artist.user_id == current_user.id %>
     <p><%= link_to "Edit", edit_artist_path(@artist) %></p>
     <p><%= link_to "Delete", artist_path(@artist), method: :delete, data: { confirm: "Are you sure?" } %></p>
 <% end %>
 <hr>
-<h2>Available songs by <%= @artist.name %>:</h2>
-<table>
-    <tr>
-        <th>SONG </th>
-        <th>DESCRIPTION </th>
-        <th>TAGS</th>
-        <th>PURCHASES</th>
-    </tr>
-    <% @artist.songs.each do |song| %>
-        <tr>
-            <% if song.available %>
-                <td><%= link_to song.name, song_path(song) %></td>
-                <td><%= song.description %></td>
-                <td><h5><%= song.genres.pluck(:name).join(", ") %></h5></td>
-                <td><%= song.purchases %></td>
-            <% end %>
-        </tr>
-    <% end %>
-</table>
+<h2>Songs by <%= @artist.name %>:</h2>
 
-<h2>Exclusively Purchased Songs:</h2>
-<table>
-    <tr>
-        <th>SONG </th>
-        <th>DESCRIPTION </th>
-        <th>TAGS</th>
-        <th>PURCHASES</th>
-    </tr>
-    <% @artist.songs.each do |song| %>
+<% if @artist.songs.size == 0 %>
+    <h4>Artist has not uploaded any songs yet</h4>
+    <% if user_signed_in? && @artist.user_id == current_user.id %>
+        <h3><%= link_to "UPLOAD YOUR FIRST SONG NOW!", new_song_path %></h3>
+    <% end %>
+<% else %>
+    <table>
         <tr>
-            <% if !song.available %>
+            <th>SONG </th>
+            <th>DESCRIPTION </th>
+            <th>TAGS </th>
+            <th>AVAILABLE?</th>
+            <th>PRICE</th>
+        </tr>
+        <% @artist.songs.each do |song| %>
+            <tr>
                 <td><%= link_to song.name, song_path(song) %></td>
                 <td><%= song.description %></td>
                 <td><h5><%= song.genres.pluck(:name).join(", ") %></h5></td>
-                <td><%= song.purchases %></td>
-            <% end %>
-        </tr>
-    <% end %>
-</table>
+                <td><%= song.available ? "Yes" : "No" %></td>
+                <td><%= song.available ? "$%.2f/$%.2f" % [song.price, song.exclusive_price] : "N/A" %></td>
+            </tr>
+        <% end %>
+    </table>
+<% end %>

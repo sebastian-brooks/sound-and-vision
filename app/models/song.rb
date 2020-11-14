@@ -12,6 +12,11 @@ class Song < ApplicationRecord
   attribute :available, default: true
 
   validates :song_file, :presence => true
+  validates :name, :presence => true, length: { maximum: 50, too_long: "must be a maximum of %{count} characters" }
+  validates :price, numericality: { greater_than_or_equal_to: 0.5, message: "Minimum price is $0.50" }
+  validates :exclusive_price, numericality: { greater_than_or_equal_to: 0.5, message: "Minimum price is $0.50" }
+  validates :artist, :presence => true
+  validates :songs_genre, :presence => true
 
   def self.search(search)
     where("lower(artists.name) LIKE :search OR lower(songs.name) LIKE :search", search: "%#{search.downcase}%")

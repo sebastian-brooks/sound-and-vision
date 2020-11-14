@@ -17,7 +17,7 @@
     </div>
     <div>
         <%= f.label :image %>
-        <%= f.file_field :image, accept: "image/png, image/jpg, image/jpeg" %>
+        <%= f.file_field :image, accept: "image/png, image/jpg, image/jpeg" %> png/jpg/jpeg files only
     </div>
     <%= f.hidden_field :user_id, value: current_user.id %>
     <div>

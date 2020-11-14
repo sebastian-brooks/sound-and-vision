@@ -1,7 +1,7 @@
 <%= form_with model: @song, local: true do |f| %>
     <div>
         <%= f.label :song_file %>
-        <%= f.file_field :song_file, accept: "audio/mpeg, audio/ogg, audio/wav" %>
+        <%= f.file_field :song_file, accept: "audio/mpeg, audio/wav" %> mp3/wav files only
     </div>
     <div>
         <%= f.label :name %>
