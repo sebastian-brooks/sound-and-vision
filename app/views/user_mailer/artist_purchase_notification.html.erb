@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Hi <%= @artist.name %></h3>
+    <h4>Someone just purchased your song <%= @song.name %>!</h4>
+    <p>Your payment of $<%= "%.2f" % (@type == 1 ? @song.price : @song.exclusive_price) %> will be forwarded to your account.</p>
+    <br>
+    <p>Well done from the entire Sound // Vision team!</p>
+  </body>
+</html>

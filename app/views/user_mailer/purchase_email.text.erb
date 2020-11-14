@@ -1,2 +1,9 @@
 Hi <%= @user.first_name %>
-Thank you for your purchase of <%= @song.name %>
+
+Thank you for your purchase of <%= @song.name %> by <%= @song.artist.name %>!
+
+Your payment of $<%= "%.2f" % (@type == 1 ? @song.price : @song.exclusive_price) %> was processed successfully.
+
+You can download your purchased song <%= link_to "here", rails_blob_url(@song.song_file, disposition: 'attachment') %> or at any time from <%= link_to "Purchases", purchases_url %>
+
+Thank you once again from the entire Sound // Vision team!

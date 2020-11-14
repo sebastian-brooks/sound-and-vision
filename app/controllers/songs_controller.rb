@@ -62,7 +62,8 @@ class SongsController < ApplicationController
       UserSong.create(user_id: current_user.id, song_id: @song.id)
     end
     
-    UserMailer.purchase_email(current_user, @song).deliver
+    UserMailer.purchase_email(current_user, @song, params[:type]).deliver
+    UserMailer.artist_purchase_notification(@song, params[:type]).deliver
   end
 
   def cancel

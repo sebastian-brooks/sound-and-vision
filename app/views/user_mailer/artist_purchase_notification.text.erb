@@ -1,0 +1,7 @@
+    Hi <%= @artist.name %>
+
+    Someone just purchased your song <%= @song.name %>!
+    
+    Your payment of $<%= "%.2f" % (@type == 1 ? @song.price : @song.exclusive_price) %> will be forwarded to your account.
+    
+    Well done from the entire Sound // Vision team!</p>

@@ -4,9 +4,11 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Hi <%= @user.first_name %></h1>
-    <p>
-      Thank you for your purchase of <%= @song.name %>
-    </p>
+    <h3>Hi <%= @user.first_name %></h3>
+    <h4>Thank you for your purchase of <%= @song.name %> by <%= @song.artist.name %>!</h4>
+    <p>Your payment of $<%= "%.2f" % (@type == 1 ? @song.price : @song.exclusive_price) %> was processed successfully.</p>
+    <p>You can download your purchased song <%= link_to "here", rails_blob_url(@song.song_file, disposition: 'attachment') %> or at any time from <%= link_to "Purchases", purchases_url %></p>
+    <br>
+    <p>Thank you once again from the entire Sound // Vision team!</p>
   </body>
 </html>
