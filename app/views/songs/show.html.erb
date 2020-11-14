@@ -21,11 +21,30 @@
 
 <p>Purchases: <%= @song.purchases %></p>
 
+<script src="https://js.stripe.com/v3/"></script>
+
 <% if @song.available %>
     <% if @user_owned %>
         <h4><%= link_to "You purchased this song on #{current_user.user_song.first.created_at}", purchases_path %></h4>
     <% else %>
         <h4>Price: $<%= "%.2f" % @song.price %> <button id="buynow">BUY!</button></h4>
+
+        <script>
+            const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>")
+            const buyButton = document.getElementById('buynow')
+
+            buyButton.addEventListener('click', function() {
+                fetch('<%= buy_path(@song.id, 1) %>', {
+                    method: 'POST'
+                })
+                .then(function(response) {
+                    return response.json()
+                })
+                .then(function(session) {
+                    return stripe.redirectToCheckout({ sessionId: session.id })
+                })
+            })
+        </script>
     <% end %>
     <% if @purchased && @sole_owner || !@purchased %>
         <h4>Exclusive Purchase Price: $<%= "%.2f" % @song.exclusive_price %> <button id="excl">BUY!</button></h4>
@@ -34,6 +53,23 @@
             <br>
             The artist grants you full use of this song provided you credit them as the composer.
         </p>
+
+        <script>
+            const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>")
+            const buyButton2 = document.getElementById('excl')
+
+            buyButton2.addEventListener('click', function() {
+                fetch('<%= buy_path(@song.id, 2) %>', {
+                    method: 'POST'
+                })
+                .then(function(response) {
+                    return response.json()
+                })
+                .then(function(session) {
+                    return stripe.redirectToCheckout({ sessionId: session.id })
+                })
+            })
+        </script>
     <% elsif @purchased && !@sole_owner %>
         <p>Exclusive purchase unavailable</p>
     <% end %>
@@ -42,38 +78,6 @@
 <% elsif !@song.available && @user_owned %>
     <h4>Congratulations - you own this song exclusively!</h4>
 <% end %>
-
-<script src="https://js.stripe.com/v3/"></script>
-
-<script>
-    const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>")
-    const buyButton = document.getElementById('buynow')
-    const buyButton2 = document.getElementById('excl')
-
-    buyButton.addEventListener('click', function() {
-        fetch('<%= buy_path(@song.id, 1) %>', {
-            method: 'POST'
-        })
-        .then(function(response) {
-            return response.json()
-        })
-        .then(function(session) {
-            return stripe.redirectToCheckout({ sessionId: session.id })
-        })
-    })
-
-    buyButton2.addEventListener('click', function() {
-        fetch('<%= buy_path(@song.id, 2) %>', {
-            method: 'POST'
-        })
-        .then(function(response) {
-            return response.json()
-        })
-        .then(function(session) {
-            return stripe.redirectToCheckout({ sessionId: session.id })
-        })
-    })
-</script>
 
 <% if @song.artist.user_id == current_user.id %>
     <p><%= link_to "Edit", edit_song_path(@song) %></p>
