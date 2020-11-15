@@ -1,0 +1,26 @@
+<h1>MY ACCOUNT</h1>
+
+<h4><%= "#{@user.first_name} #{@user.last_name} (#{@user.email})"%> <%= link_to "Edit", edit_user_registration_path %></h4>
+
+<h3>MY PURCHASED SONGS</h3>
+<% if @user.songs.size > 0 %>
+    <p><%= link_to "View my purchases", purchases_path %></p>
+<% else %>
+    <p>You have not purchased any songs yet</p>
+<% end %>
+
+<h3>MY ARTIST & UPLOADED SONGS</h3>
+<% if @user.has_role?(:artist) %>
+    <% @artists.each do |artist| %>
+        <h4><%= image_tag artist.image, width: 50 %> <%= link_to artist.name, artist_path(artist) %></h4>
+        <% if artist.songs.size > 0 %>
+            <% artist.songs.each do |song| %>
+                <p><%= link_to song.name, song_path(song) %></p>
+            <% end %>
+        <% else %>
+            <p>No songs uploaded for this artist</p>
+        <% end %>
+    <% end %>
+<% else %>
+    <p>You do not have an artist account. Create one <%= link_to "here", new_artist_path %> in order to upload your music.</p>
+<% end %>

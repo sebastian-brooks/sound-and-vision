@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   get "/songs/:id/cancel", to: "songs#cancel", as: "cancel"
 
   get "/purchases", to: "pages#purchases", as: "purchases"
+  get "/account", to: "pages#account", as: "account"
 end

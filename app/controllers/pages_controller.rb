@@ -24,6 +24,11 @@ class PagesController < ApplicationController
     @user_songs = current_user.songs if current_user.songs.size > 0
   end
 
+  def account
+    @user = current_user
+    @artists = @user.artists if @user.has_role?(:artist)
+  end
+
   private
 
   def check_roles

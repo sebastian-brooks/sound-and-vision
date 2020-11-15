@@ -6,10 +6,7 @@
     <% if current_user.has_role?(:admin) %>
         | <%= link_to "ADMIN", admin_path %>
     <% end %>
-    <% if current_user.songs.size > 0 %>
-        | <%= link_to "PURCHASES", purchases_path %>
-    <% end %>
-    | <%= link_to "ACCOUNT", edit_user_registration_path %>
+    | <%= link_to "ACCOUNT", account_path %>
     | <%= link_to "LOG OUT", destroy_user_session_path, method: :delete %>
     | Signed in as <%= "#{current_user.first_name} #{current_user.last_name} (#{current_user.email})"%>
 <% else %>
