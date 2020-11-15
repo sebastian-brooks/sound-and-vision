@@ -13,8 +13,6 @@ class PagesController < ApplicationController
 
   def admin
     @users = User.all.where("id <> #{current_user.id}").first(25)
-    @genres = Genre.all
-    @genre = Genre.new
   end
 
   def artist_song_search
