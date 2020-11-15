@@ -1,6 +1,18 @@
 <h1>ADMINISTRATION</h1>
-<h4>User Management</h4>
 
+<h3>USER MANAGEMENT</h3>
 <% @users.each do |user| %>
     <p><%= user.first_name %> <%= user.last_name %> (<%= user.email %>): <%= user.roles.pluck(:name).join(", ") %></p>
+<% end %>
+
+<h3>GENRE MANAGEMENT</h3>
+<p><%= @genres.pluck(:name).join(", ") %></p>
+
+<h4>ADD GENRE:</h4>
+<%= form_with model: @genre, local: true, method: 'post' do |f| %>
+    <div>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+        <%= f.submit %>
+    </div>
 <% end %>

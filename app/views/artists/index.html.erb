@@ -1,27 +1,7 @@
 <h1>ARTISTS</h1>
 
 <h3><%= link_to "Create an artist account", new_artist_path %></h3>
-
-<% if user_signed_in? && current_user.has_role?(:artist) %>
-    <table>
-        <tr>
-            <th>MY ARTIST</th>
-            <th></th>
-        </tr>
-        <% @user_artist.each do |artist| %>
-        <tr>
-            <td>
-                <% if artist.image.attached? %>
-                    <%= image_tag artist.image, width: 50  %>
-                <% end %>
-            </td>
-            <td><%= link_to artist.name, artist_path(artist) %></td>
-        </tr>
-    <% end %>
-    </table>
-    <hr>
-<% end %>
-
+<hr>
 <table>
     <tr>
         <th>ARTISTS</th>

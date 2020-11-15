@@ -7,6 +7,8 @@ class PagesController < ApplicationController
 
   def admin
     @users = User.all.where("id <> #{current_user.id}").first(25)
+    @genres = Genre.all
+    @genre = Genre.new
   end
 
   def search
@@ -32,7 +34,7 @@ class PagesController < ApplicationController
   private
 
   def check_roles
-    if !current_user.has_role?(:admin)
+    if user_signed_in? && !current_user.has_role?(:admin)
       flash[:alert] = "You do not have access to that part of the site"
       redirect_to root_path
     end
