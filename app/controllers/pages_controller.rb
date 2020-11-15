@@ -3,6 +3,12 @@ class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :search]
 
   def index
+    random_artist_arr = (1..Artist.count).to_a.shuffle[0..5]
+    
+    @artists = []
+    random_artist_arr.each do |i|
+      @artists << Artist.find(i)
+    end
   end
 
   def admin
@@ -11,14 +17,28 @@ class PagesController < ApplicationController
     @genre = Genre.new
   end
 
-  def search
+  def artist_song_search
     if params[:search].blank?
       redirect_to(root_path, alert: "Empty field!") and return
     else
-      # @parameter = params[:search].downcase
-      # @results = Artist.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
       @search = params[:search]
       @results = Song.joins(:artist).search(params[:search]).order(:name).first(25)
+    end
+  end
+
+  def genre_search
+    if params[:search].blank?
+      redirect_to(root_path, alert: "Empty field!") and return
+    else
+      @parameter = params[:search].downcase
+      @results = Genre.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
+
+      @genre_songs = []
+      @results.each do |res|
+        if res.songs.size > 0
+          @genre_songs << res
+        end
+      end
     end
   end
 

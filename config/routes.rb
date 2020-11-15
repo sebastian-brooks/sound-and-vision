@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   devise_for :users
   
   root to: "pages#index"
-  get "/pages/index"
   get "/admin", to: "pages#admin", as: "admin"
-  post "/search", to: "pages#search", as: "search"
+  post "/artist_song_search", to: "pages#artist_song_search", as: "artist_song_search"
+  post "/genre_search", to: "pages#genre_search", as: "genre_search"
   
   post "/songs/:id/:type/buy", to: "songs#buy", as: "buy"
   get "/songs/:id/:type/success", to: "songs#success", as: "success"

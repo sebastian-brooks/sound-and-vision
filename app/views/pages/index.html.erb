@@ -1,4 +1,12 @@
 <h1>SOUND // VISION</h1>
-<p>Music market for media content creators</p>
+<h5>Music market for media content creators</h5>
 
-<h3>Use nav bar at top to get around the site for now</h3>
+<h3>ARTIST SPOTLIGHT</h3>
+<% @artists.each do |artist| %>
+    <p><%= image_tag artist.image, width: 50  %> <%= link_to artist.name, artist_path(artist) %></td></p>
+<% end %>
+<h5><%= link_to "see all artists", artists_path %></h5>
+
+<%= render partial: "shared/search_artist_song" %>
+
+<%= render partial: "shared/search_genre" %>

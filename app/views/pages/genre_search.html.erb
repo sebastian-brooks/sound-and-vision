@@ -1,0 +1,10 @@
+<h3>Genre Results for "<%= @parameter %>"</h3>
+<% @results.each do |genre| %>
+    <p><%= genre.name %></p>
+<% end %>
+<% @genre_songs.each do |genre| %>
+    <h3><%= genre.name %> songs:</h3>
+    <% genre.songs.each do |song| %>
+        <p><%= link_to song.name, song_path(song) %></p>
+    <% end %>
+<% end %>
