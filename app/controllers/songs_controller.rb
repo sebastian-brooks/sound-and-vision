@@ -1,6 +1,7 @@
 class SongsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:buy]
   before_action :authenticate_user!, except: [:buy, :index]
+  before_action :check_block
   before_action :set_song, except: [:index, :new, :create]
   before_action :set_user_artists, only: [:new, :edit]
   before_action :set_genres, only: [:show, :edit, :update, :new]
@@ -117,5 +118,12 @@ class SongsController < ApplicationController
 
   def song_params
     params.require(:song).permit(:song_file, :name, :description, :price, :exclusive_price, :artist_id, genre_ids: [])
+  end
+
+  def check_block
+    if user_signed_in? && current_user.has_role?(:blocked)
+      flash[:alert] = "Your account has been blocked. Please contact an administrator"
+      redirect_to root_path
+    end
   end
 end

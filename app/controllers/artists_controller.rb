@@ -1,4 +1,5 @@
 class ArtistsController < ApplicationController
+  before_action :check_block
   before_action :set_artist, only: [:show, :edit, :update, :destroy]
   before_action :set_user_artist, only: [:index]
   before_action :authenticate_user!, except: [:index, :show]
@@ -70,5 +71,12 @@ class ArtistsController < ApplicationController
 
   def artist_params
     params.require(:artist).permit(:name, :email, :description, :website, :image, :user_id)
+  end
+
+  def check_block
+    if user_signed_in? && current_user.has_role?(:blocked)
+      flash[:alert] = "Your account has been blocked. Please contact an administrator"
+      redirect_to root_path
+    end
   end
 end

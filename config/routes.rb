@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   post "/genre_search", to: "pages#genre_search", as: "genre_search"
   get "/purchases", to: "pages#purchases", as: "purchases"
   get "/account", to: "pages#account", as: "account"
+  get "/user/:id/:role", to: "pages#change_role", as: "change_role"
 end
