@@ -1,6 +1,7 @@
-<h4>FIND SONGS BY GENRE/STYLE</h4>
-<%= form_tag genre_search_path, method: :post do %>
-    <%= label_tag :search, "Enter genre/style" %>
-    <%= text_field_tag :search %>
-    <%= submit_tag "Search" %>
-<% end %>
+<div>
+    <%= form_tag genre_search_path, method: :post do %>
+        <%= label_tag :search, "Search by genre/style" %>
+        <%= text_field_tag :search %>
+        <%= submit_tag "Search" %>
+    <% end %>
+</div>

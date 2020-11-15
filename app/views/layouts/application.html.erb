@@ -7,12 +7,15 @@
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
+    <%= favicon_link_tag "artist.png" %>
   </head>
 
   <body>
     <%= render partial: "shared/nav" %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>

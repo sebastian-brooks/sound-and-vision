@@ -1,4 +1,7 @@
+<div><%= render partial: "shared/search_artist_song" %></div>
+
 <h3>Search Results for "<%= @search %>"</h3>
+
 <% @results.each do |result| %>
     <%= link_to result.artist.name, result.artist %> - <%= link_to result.name, result %><br>
 <% end %>

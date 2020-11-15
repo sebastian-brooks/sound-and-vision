@@ -13,3 +13,47 @@
  *= require_tree .
  *= require_self
  */
+
+* {
+    margin: 0;
+    padding: 2px;
+}
+
+body {
+    font-family: "Nanum Gothic", sans-serif;
+    background-color: rgb(14, 37, 51);
+    color: antiquewhite;
+}
+
+a {
+    text-decoration: none;
+}
+a:link {
+    color: salmon;
+}
+a:visited {
+    color: salmon;
+}
+a:hover {
+    color: white;
+}
+
+nav {
+    width: 100%;
+    height: 40px;
+    background-color: rgba(250, 128, 114, 0.87);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    flex-wrap: row-wrap;
+}
+nav a:link {
+    color: black;
+}
+nav a:visited {
+    color: black;
+}
+nav a:hover {
+    color: white;
+}
