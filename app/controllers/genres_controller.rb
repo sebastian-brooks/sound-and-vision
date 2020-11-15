@@ -1,6 +1,6 @@
 class GenresController < ApplicationController
+  before_action :check_roles
   before_action :authenticate_user!
-  before_action :check_roles, only: [:admin]
   before_action :set_genre, except: [:index, :new, :create]
 
   def index
