@@ -11,32 +11,26 @@
     </div>
 </section>
 
-<%= render partial: "shared/search_artist_song" %>
-<%= render partial: "shared/search_genre" %>
-<% if user_signed_in? && current_user.has_role?(:artist) %>
-    <h3><%= link_to "Upload a song", new_song_path %></h3>
-    <hr>
-<% end %>
+<section class="section is-centered">
+    <% if user_signed_in? && current_user.has_role?(:artist) %>
+        <div class="column has-text-centered">
+            <div class="card">
+                <div class="card-content">
+                    <p class="title">
+                        <%= link_to "UPLOAD SONG", new_song_path, class: "button is-large is-link" %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    <% end %>
+    <div class="columns is-centered">
+        <div class="column has-text-centered">
+            <%= render partial: "shared/search_artist_song" %>
+        </div>
+        <div class="column has-text-centered">
+            <%= render partial: "shared/search_genre" %>
+        </div>
+    </div>
+</section>
 
-<table>
-    <tr>
-        <th></th>
-        <th>Artist</th>
-        <th>Song</th>
-        <th>Tags</th>
-        <th>Purchases</th>
-    </tr>
-    <% @songs.each do |song| %>
-    <tr>
-        <td>
-            <% if song.artist.image.attached? %>
-                <%= image_tag song.artist.image, width: 50  %>
-            <% end %>
-        </td>
-        <td><%= link_to song.artist.name, artist_path(song.artist) %></td>
-        <td><%= link_to song.name, song_path(song) %></td>
-        <td><h5><%= song.genres.pluck(:name).join(", ") %></h5></td>
-        <td><%= song.purchases %></td>
-    </tr>
-<% end %>
-</table>
+<%= render partial: "shared/songs" %>

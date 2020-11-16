@@ -1,0 +1,34 @@
+<% @songs.each do |song| %>
+    <article class="media">
+        <figure class="media-left">
+            <p class="image is-128x128">
+                <% if song.artist.image.attached? %>
+                    <%= link_to image_tag(song.artist.image, class: "is-rounded"), song_path(song) %>
+                <% end %>
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <span class="icon is-small"><img src="assets/music.png" /></span>
+                    <strong><%= link_to song.name, song_path(song) %></strong><br>
+                    by <small><%= link_to song.artist.name, artist_path(song.artist) %></small>
+                    <br>
+                    <%= song.description %>
+                    <br>
+                    <span class="tag is-black"><%= song.genres.pluck(:name).join(", ") %></span>
+                </p>
+            </div>
+            <nav class="level is-mobile">
+                <div class="level-left">
+                    <div class="level-item">
+                        <small>$<%= "%.2f" % song.price %> // $<%= "%.2f" % song.exclusive_price %></small>
+                    </div>
+                    <div class="level-item">
+                        <button class="button is-small"><%= link_to "LISTEN // BUY", song_path(song) %></button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </article>
+<% end %>

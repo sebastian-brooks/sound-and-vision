@@ -1,52 +1,37 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <%= link_to "SOUND // VISION", root_path, class: "navbar-item" %>
-
-    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
+      <%= link_to "SOUND // VISION", root_path, class: "navbar-item" %>
+      <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
     </div>
-
     <div class="navbar-menu" id="navMenu">
       <div class="navbar-start">
         <%= link_to "songs", songs_path, class: "navbar-item" %>
-
         <%= link_to "artists", artists_path, class: "navbar-item" %>
-  
         <% if user_signed_in? %>
-            <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-                more
-            </a>
-    
-            <div class="navbar-dropdown">
-                <%= link_to "account", account_path, class: "navbar-item" %>
-
-                <% if current_user.has_role?(:admin) %>
-                    <%= link_to "admin", admin_path, class: "navbar-item" %>
-                <% end %>
-            </div>
-            </div>
+          <%= link_to "account", account_path, class: "navbar-item" %>
+            <% if current_user.has_role?(:admin) %>
+                <%= link_to "admin", admin_path, class: "navbar-item" %>
+            <% end %>
         <% end %>
     </div>
-
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
                     <% if user_signed_in? %>
-                        <strong><%= link_to "log out", destroy_user_session_path, method: :delete, class: "button is-primary" %></strong>
+                        <strong><%= link_to "log out", destroy_user_session_path, method: :delete, class: "button is-black is-outlined" %></strong>
                     <% else %>
-                        <strong><%= link_to "sign up", new_user_registration_path, class: "button is-primary" %></strong>
-                        <%= link_to "log in", new_user_session_path, class: "button is-light" %>
+                      <strong><%= link_to "log in ", new_user_session_path, class: "button is-dark is-outlined" %></strong>
+                      <strong><%= link_to "sign up", new_user_registration_path, class: "button is-info is-outlined" %></strong>
                     <% end %>
                 </div>
             </div>
         </div>
     </div>
 </nav>
-
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

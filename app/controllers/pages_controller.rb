@@ -4,12 +4,6 @@ class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :search]
 
   def index
-    random_artist_arr = (1..Artist.count).to_a.shuffle[0..5]
-    
-    @artists = []
-    random_artist_arr.each do |i|
-      @artists << Artist.find(i)
-    end
   end
 
   def admin

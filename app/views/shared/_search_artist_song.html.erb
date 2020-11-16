@@ -1,4 +1,14 @@
-<%= form_tag artist_song_search_path, method: :post do %>
-    <%= text_field_tag :search, nil, placeholder: "search artist/song" %>
-    <%= submit_tag "Search" %>
-<% end %>
+<div class="card">
+    <div class="card-content">
+        <p class="title">
+            <%= form_tag artist_song_search_path, method: :post do %>
+                <div class="field">
+                    <div class="control">
+                        <%= text_field_tag :search, nil, placeholder: "search artist/song", class: "input" %>
+                    </div>
+                </div>
+                <%= submit_tag "Search", class: "button is-primary" %>
+            <% end %>
+        </p>
+    </div>
+</div>
