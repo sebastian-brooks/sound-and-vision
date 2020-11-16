@@ -1,6 +1,4 @@
-<div>
-    <%= form_tag artist_song_search_path, method: :post do %>
-        <%= text_field_tag :search, nil, placeholder: "search artist/song" %>
-        <%= submit_tag "Search" %>
-    <% end %>
-</div>
+<%= form_tag artist_song_search_path, method: :post do %>
+    <%= text_field_tag :search, nil, placeholder: "search artist/song" %>
+    <%= submit_tag "Search" %>
+<% end %>
