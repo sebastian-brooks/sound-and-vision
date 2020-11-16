@@ -10,9 +10,12 @@ class PagesController < ApplicationController
     @users = User.all.where("id <> #{current_user.id}").first(25)
   end
 
+  def search
+  end
+
   def artist_song_search
     if params[:search].blank?
-      redirect_to(root_path, alert: "Empty field!") and return
+      redirect_to(search_path, alert: "Empty field!")
     else
       @search = params[:search]
       @results = Song.joins(:artist).search(params[:search]).order(:name).first(25)
@@ -21,7 +24,7 @@ class PagesController < ApplicationController
 
   def genre_search
     if params[:search].blank?
-      redirect_to(root_path, alert: "Empty field!") and return
+      redirect_to(search_path, alert: "Empty field!")
     else
       @parameter = params[:search].downcase
       @results = Genre.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")

@@ -12,18 +12,7 @@
 </section>
 
 <section class="section is-centered">
-  <div class="column has-text-centered">
-    <div class="card">
-      <div class="card-content">
-        <p class="title">
-          <%= link_to "SEARCH", songs_path %>
-        </p>
-        <p class="subtitle is-6">
-          search songs // artists // genres
-        </p>
-      </div>
-    </div>
-  </div>
+  <%= render partial: "shared/search_card" %>
   <div class="columns is-centered">
     <div class="column has-text-centered">
       <div class="card">

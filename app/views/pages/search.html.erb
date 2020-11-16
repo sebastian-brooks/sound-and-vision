@@ -1,0 +1,49 @@
+<section class="hero is-small is-dark">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                SEARCH
+            </h1>
+            <h2 class="subtitle is-6">
+                search SOUND // VISION
+            </h2>
+        </div>
+    </div>
+</section>
+
+<section class="section is-centered">
+    <div class="columns is-centered">
+        <div class="column has-text-centered">
+            <div class="card">
+                <div class="card-content">
+                    <p class="title">
+                        <%= form_tag artist_song_search_path, method: :post do %>
+                            <div class="field">
+                                <div class="control">
+                                    <%= text_field_tag :search, nil, placeholder: "artist/song", class: "input" %>
+                                </div>
+                            </div>
+                            <%= submit_tag "SEARCH", class: "button is-link" %>
+                        <% end %>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="column has-text-centered">
+            <div class="card">
+                <div class="card-content">
+                    <p class="title">
+                        <%= form_tag genre_search_path, method: :post do %>
+                            <div class="field">
+                                <div class="control">
+                                    <%= text_field_tag :search, nil, placeholder: "genre/style", class: "input" %>
+                                </div>
+                            </div>
+                            <%= submit_tag "SEARCH", class: "button is-info" %>
+                        <% end %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

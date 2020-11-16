@@ -1,28 +1,39 @@
-<header>
-  <h1>LOG IN</h1>
-</header>
+<section class="hero is-small is-dark">
+  <div class="hero-body">
+      <div class="container">
+          <h1 class="title">
+            LOG IN
+          </h1>
+          <h2 class="subtitle is-6">
+          
+          </h2>
+      </div>
+  </div>
+</section>
 
+<section class="section is-centered">
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :email, class: "label" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
   </div>
 
   <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
+    <%= f.label :password, class: "label" %>
+    <%= f.password_field :password, autocomplete: "current-password", class: "input" %>
   </div>
 
   <% if devise_mapping.rememberable? %>
     <div class="field">
-      <%= f.check_box :remember_me %>
+      <%= f.check_box :remember_me, class: "checkbox" %>
       <%= f.label :remember_me %>
     </div>
   <% end %>
 
   <div class="actions">
-    <%= f.submit "Log in" %>
+    <%= f.submit "LOG IN", class: "button is-link" %>
   </div>
 <% end %>
-
+<br><br>
 <%= render "devise/shared/links" %>
+</section>
