@@ -1,21 +1,19 @@
-<header>
-    <h1 class="title">SOUND // VISION</h1>
-    <h5 class="subtitle">music market for media content creators</h5>
-</header>
-
-<section>
-    <div><%= render partial: "shared/search_artist_song" %></div>
-    <div><%= render partial: "shared/search_genre" %></div>
+<section class="hero is-small is-dark">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        SOUND // VISION
+      </h1>
+      <h2 class="subtitle is-6">
+        music market for media content creators
+      </h2>
+    </div>
+  </div>
 </section>
 
-<!-- <section>
-    <h3>ARTIST SPOTLIGHT</h3>
-    <% @artists.each do |artist| %>
-        <div><%= image_tag artist.image, width: 50  %> <%= link_to artist.name, artist_path(artist) %></div>
-    <% end %>
-</section> -->
-
-<h3 class="subtitle">ARTIST SPOTLIGHT</h3>
+<section class="section">
+  <h3 class="subtitle">ARTIST SPOTLIGHT</h3>
+</section>
 
 <% @artists.each do |artist| %>
 <div class="box">

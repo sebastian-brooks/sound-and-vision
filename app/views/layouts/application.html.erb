@@ -16,8 +16,14 @@
     <%= render partial: "shared/nav" %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    <section class="section">
-      <%= yield %>
-    </section>
+    <%= yield %>
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>SOUND // VISION</strong> &copy; Copyright 2020, <a href="https://github.com/sthobropdr">Sebastian Brooks</a>.
+          All rights reserved.
+        </p>
+      </div>
+    </footer>
   </body>
 </html>

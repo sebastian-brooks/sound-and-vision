@@ -1,6 +1,16 @@
-<header>
-    <h1>SONGS</h1>
-</header>
+<section class="hero is-small is-dark">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                SONGS
+            </h1>
+            <h2 class="subtitle is-6">
+            
+            </h2>
+        </div>
+    </div>
+</section>
+
 <%= render partial: "shared/search_artist_song" %>
 <%= render partial: "shared/search_genre" %>
 <% if user_signed_in? && current_user.has_role?(:artist) %>
