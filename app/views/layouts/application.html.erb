@@ -14,13 +14,15 @@
 
   <body>
     <%= render partial: "shared/nav" %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <div style="padding: 0.5%;">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><strong><%= alert %></strong></p>
+    </div>
     <%= yield %>
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
-          <strong>SOUND // VISION</strong> &copy; Copyright 2020, <a href="https://github.com/sthobropdr">Sebastian Brooks</a>.
+          <strong>SOUND // VISION</strong> &copy; Copyright 2020, <a href="https://github.com/sthobropdr" target="_blank">Sebastian Brooks</a>.
           All rights reserved.
         </p>
       </div>

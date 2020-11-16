@@ -1,33 +1,36 @@
 <%= form_with model: @song, local: true do |f| %>
     <div>
-        <%= f.label :song_file %>
-        <%= f.file_field :song_file, accept: "audio/mpeg, audio/wav" %> mp3/wav files only
+        <%= f.label :song_file, class: "label" %>
+        <%= f.file_field :song_file, accept: "audio/mpeg, audio/wav", class: "button is-ghost" %>
+        <p class="help is-black">
+            mp3/wav files only
+        </p><br />
     </div>
     <div>
-        <%= f.label :name %>
-        <%= f.text_field :name %>
+        <%= f.label :name, class: "label" %>
+        <%= f.text_field :name, class: "input" %>
     </div>
     <div>
-        <%= f.label :description %>
-        <%= f.text_area :description, size: '25x5' %>
+        <%= f.label :description, class: "label" %>
+        <%= f.text_area :description, class: "textarea", rows: 3 %>
     </div>
     <div>
-        <%= f.label :price %>
-        <%= f.number_field :price, step: 0.01 %>
+        <%= f.label :price, class: "label" %>
+        <%= f.number_field :price, step: 0.1, class: "input" %>
     </div>
     <div>
-        <%= f.label :exclusive_price %>
-        <%= f.number_field :exclusive_price, step: 0.01 %>
+        <%= f.label :exclusive_price, class: "label" %>
+        <%= f.number_field :exclusive_price, step: 0.1, class: "input" %>
     </div>
-    <div>
-        <%= f.label :artist_id %>
+    <%= f.label :artist_id, class: "label" %>
+    <div class="select">
         <%= f.select(:artist_id, @artists.map { |a| [a.name, a.id] }) %>
     </div>
+    <%= f.label :genres, class: "label" %>
+    <div class="checkbox">
+        <p><%= f.collection_check_boxes :genre_ids, @genres, :id, :name %></p>
+    </div><br /><br />
     <div>
-        <%= f.label :genres %>
-        <%= f.collection_check_boxes :genre_ids, @genres, :id, :name %>
-    </div>
-    <div>
-        <%= f.submit %>
+        <%= f.submit "Create Song", class: "button is-link" %>
     </div>
 <% end %>

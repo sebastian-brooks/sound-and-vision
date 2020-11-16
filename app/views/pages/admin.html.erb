@@ -11,14 +11,18 @@
     </div>
 </section>
 
-<h3>USER MANAGEMENT</h3>
-<% @users.each do |user| %>
-    <p><%= user.first_name %> <%= user.last_name %> (<%= user.email %>): <%= user.roles.pluck(:name).join(", ") %></p>
-    <%= link_to "Make Admin", change_role_path(user, 1) %>
-    <%= link_to "Remove Admin Rights", change_role_path(user, 2) %>
-    <%= link_to "Block User", change_role_path(user, 3) %>
-    <%= link_to "Unblock User", change_role_path(user, 4) %>
-<% end %>
+<section class="section is-centered">
+    <%= link_to "MANAGE GENRES", genres_path, class: "button is-link" %>
+</section>
 
-<h3>GENRE MANAGEMENT</h3>
-<p><%= link_to "Manage genre list", genres_path %></p>
+<section class="section is-centered">
+    <h3 class="subtitle">USERS</h3>
+    <% @users.each do |user| %>
+        <p><%= user.first_name %> <%= user.last_name %>(<%= user.email %>)</p>
+        <p>Roles: <%= user.roles.pluck(:name).join(", ") %></p>
+        <%= link_to "Make Admin", change_role_path(user, 1), class: "button is-success is-small" %>
+        <%= link_to "Remove Admin", change_role_path(user, 2), class: "button is-link is-outlined is-small" %>
+        <%= link_to "Block User", change_role_path(user, 3), class: "button is-danger is-outlined is-small" %>
+        <%= link_to "Unblock User", change_role_path(user, 4), class: "button is-link is-outlined is-small" %>
+    <% end %>
+</section>

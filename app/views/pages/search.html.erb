@@ -18,12 +18,17 @@
                 <div class="card-content">
                     <p class="title">
                         <%= form_tag artist_song_search_path, method: :post do %>
-                            <div class="field">
-                                <div class="control">
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
                                     <%= text_field_tag :search, nil, placeholder: "artist/song", class: "input" %>
                                 </div>
+                                <div class="control">
+                                    <%= submit_tag "SEARCH", class: "button is-link" %>
+                                </div>
                             </div>
-                            <%= submit_tag "SEARCH", class: "button is-link" %>
+                            <p class="help is-black">
+                                search artists/songs
+                            </p>
                         <% end %>
                     </p>
                 </div>
@@ -34,12 +39,17 @@
                 <div class="card-content">
                     <p class="title">
                         <%= form_tag genre_search_path, method: :post do %>
-                            <div class="field">
-                                <div class="control">
-                                    <%= text_field_tag :search, nil, placeholder: "genre/style", class: "input" %>
-                                </div>
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <%= text_field_tag :search, nil, placeholder: "genre/style", class: "input" %>
                             </div>
-                            <%= submit_tag "SEARCH", class: "button is-info" %>
+                            <div class="control">
+                                <%= submit_tag "SEARCH", class: "button is-warning" %>
+                            </div>
+                        </div>
+                        <p class="help is-black">
+                            search genres/styles
+                        </p>
                         <% end %>
                     </p>
                 </div>
