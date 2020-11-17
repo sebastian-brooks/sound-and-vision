@@ -4,9 +4,6 @@
             <h1 class="title">
                 <%= @song.name %>
             </h1>
-            <h2 class="subtitle is-6">
-            
-            </h2>
         </div>
     </div>
 </section>
@@ -52,9 +49,9 @@
         <div class="container">
             <br />
             <% if @user_owned %>
-                <h4><%= link_to "You purchased this song on #{current_user.user_song.first.created_at}", purchases_path %></h4>
+                <h4><%= link_to "Purchased on #{current_user.user_song.first.created_at}", purchases_path, class: "button is-black is-outlined" %></h4>
             <% else %>
-                <h4>Price: $<%= "%.2f" % @song.price %> <button id="buynow" class="button is-link">BUY!</button></h4>
+                <button id="buynow" class="button is-link is-outlined"><%= "BUY FOR $%.2f" % @song.price %></button>
                 
                 <script>
                     const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>")
@@ -77,8 +74,8 @@
         <div class="container">
             <br />
             <% if @purchased && @sole_owner || !@purchased %>
-                <h4>Exclusive Purchase Price: <strong>$<%= "%.2f" % @song.exclusive_price %></strong> <button id="excl" class="button is-link">BUY!</button></h4>
-                <br />
+                <button id="excl" class="button is-link"><%= "EXCLUSIVE PRICE $%.2f" % @song.exclusive_price %></button>
+                <br /><br />
                 <p>
                     <i>Exclusive purchase prices are usually higher because once you purchase this song, it is no longer available for other users to buy - it is uniquely yours!
                     <br>
@@ -86,7 +83,6 @@
                 </p>
 
                 <script>
-                    const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>")
                     const buyButton2 = document.getElementById('excl')
 
                     buyButton2.addEventListener('click', function() {

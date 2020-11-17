@@ -21,6 +21,9 @@
     <div>
         <%= f.label :exclusive_price, class: "label" %>
         <%= f.number_field :exclusive_price, step: 0.1, class: "input" %>
+        <p class="help is-danger">
+             Exclusive purchases are a one-time purchase - the song can't be purchased again - so the exclusive price is usually set higher
+        </p><br />
     </div>
     <%= f.label :artist_id, class: "label" %>
     <div class="select">
