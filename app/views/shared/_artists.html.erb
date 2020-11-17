@@ -1,0 +1,30 @@
+<% @artists.each do |artist| %>
+    <article class="media">
+        <figure class="media-left">
+            <p class="image is-128x128">
+                <% if artist.image.attached? %>
+                    <%= link_to image_tag(artist.image, class: "is-rounded"), artist_path(artist) %>
+                <% end %>
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong><%= link_to artist.name, artist_path(artist) %></strong><br>
+                    <br>
+                    <%= artist.description %>
+                </p>
+            </div>
+            <nav class="level is-mobile">
+                <div class="level-left">
+                    <div class="level-item">
+                        <small><%= artist.songs.count %> songs uploaded</small>
+                    </div>
+                    <div class="level-item">
+                        <button class="button is-small"><%= link_to "VIEW ARTIST", artist_path(artist) %></button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </article>
+<% end %>

@@ -1,0 +1,65 @@
+<div class="columns is-centered">
+    <div class="column has-text-centered">
+        <div class="card">
+            <div class="card-content">
+                <p class="title">
+                    <%= form_tag search_results_path(0), method: :post do %>
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <%= text_field_tag :search, nil, placeholder: "genre", class: "input" %>
+                            </div>
+                            <div class="control">
+                                <%= submit_tag "SEARCH", class: "button is-link" %>
+                            </div>
+                        </div>
+                        <p class="help is-black">
+                            search genres/styles
+                        </p>
+                    <% end %>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="column has-text-centered">
+        <div class="card">
+            <div class="card-content">
+                <p class="title">
+                    <%= form_tag search_results_path(1), method: :post do %>
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <%= text_field_tag :search, nil, placeholder: "song", class: "input" %>
+                            </div>
+                            <div class="control">
+                                <%= submit_tag "SEARCH", class: "button is-link" %>
+                            </div>
+                        </div>
+                        <p class="help is-black">
+                            search songs
+                        </p>
+                    <% end %>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="column has-text-centered">
+        <div class="card">
+            <div class="card-content">
+                <p class="title">
+                    <%= form_tag search_results_path(2), method: :post do %>
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <%= text_field_tag :search, nil, placeholder: "artist", class: "input" %>
+                            </div>
+                            <div class="control">
+                                <%= submit_tag "SEARCH", class: "button is-link" %>
+                            </div>
+                        </div>
+                        <p class="help is-black">
+                            search artists
+                        </p>
+                    <% end %>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,15 +2,15 @@
     <div class="hero-body">
         <div class="container">
             <h1 class="title">
-                SEARCH
+                <%= @genre.upcase %> SONGS
             </h1>
             <h2 class="subtitle is-6">
-                search genres // songs // artists
+            
             </h2>
         </div>
     </div>
 </section>
 
 <section class="section is-centered">
-    <%= render partial: "shared/search" %>
+    <%= render partial: "shared/songs" %>
 </section>

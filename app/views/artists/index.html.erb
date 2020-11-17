@@ -4,32 +4,22 @@
             <h1 class="title">
                 ARTISTS
             </h1>
-            <h2 class="subtitle is-6">
-            
-            </h2>
         </div>
     </div>
+
+    <% if user_signed_in? %>
+        <div class="column has-text-centered">
+            <div class="card">
+                <div class="card-content">
+                    <p class="title">
+                        <%= link_to "CREATE ARTIST PROFILE", new_artist_path, class: "button is-large is-link" %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    <% end %>
 </section>
 
-<%= render partial: "shared/search_artist_song" %>
-
-<h3><%= link_to "Create an artist account", new_artist_path %></h3>
-
-<hr>
-
-<table>
-    <tr>
-        <th>ARTISTS</th>
-        <th></th>
-    </tr>
-    <% @artists.each do |artist| %>
-    <tr>
-        <td>
-            <% if artist.image.attached? %>
-                <%= image_tag artist.image, width: 50  %>
-            <% end %>
-        </td>
-        <td><%= link_to artist.name, artist_path(artist) %></td>
-    </tr>
-<% end %>
-</table>
+<section class="section is-centered">
+    <%= render partial: "shared/artists" %>
+</section>

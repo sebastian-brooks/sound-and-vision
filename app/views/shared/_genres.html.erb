@@ -1,0 +1,21 @@
+<% @genres.each do |genre| %>
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong><%= link_to genre.name, genre_songs_path(genre) %></strong>
+                </p>
+            </div>
+            <nav class="level is-mobile">
+                <div class="level-left">
+                    <div class="level-item">
+                        <small><%= genre.songs.count %> songs available</small>
+                    </div>
+                    <div class="level-item">
+                        <button class="button is-small"><%= link_to "VIEW #{genre.name.upcase} SONGS", genre_songs_path(genre) %></button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </article>
+<% end %>

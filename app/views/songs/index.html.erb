@@ -9,9 +9,7 @@
             </h2>
         </div>
     </div>
-</section>
 
-<section class="section is-centered">
     <% if user_signed_in? && current_user.has_role?(:artist) %>
         <div class="column has-text-centered">
             <div class="card">
@@ -23,7 +21,8 @@
             </div>
         </div>
     <% end %>
-    <%= render partial: "shared/search_card" %>
 </section>
 
-<%= render partial: "shared/songs" %>
+<section class="section is-centered">
+    <%= render partial: "shared/songs" %>
+</section>

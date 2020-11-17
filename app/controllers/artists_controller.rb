@@ -9,15 +9,7 @@ class ArtistsController < ApplicationController
   end
 
   def show
-    genres = []
-    @purchases = 0
-    if !@artist.songs.nil?
-      @artist.songs.each do |song|
-        genres << song.genres.pluck(:name)
-        @purchases += song.purchases
-      end
-    end
-    @genres = genres.flatten.uniq.join(", ")
+    @songs = @artist.songs
   end
 
   def new

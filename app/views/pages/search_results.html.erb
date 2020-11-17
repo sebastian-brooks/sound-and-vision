@@ -5,10 +5,20 @@
                 SEARCH
             </h1>
             <h2 class="subtitle is-6">
-                search genres // songs // artists
+                <%= @search_type %> search results for "<%= @parameter %>""
             </h2>
         </div>
     </div>
+</section>
+
+<section class="section is-centered">
+    <% if @type == 0 %>
+        <%= render partial: "shared/genres" %>
+    <% elsif @type == 1 %>
+        <%= render partial: "shared/songs" %>
+    <% elsif @type == 2 %>
+        <%= render partial: "shared/artists" %>
+    <% end %>
 </section>
 
 <section class="section is-centered">

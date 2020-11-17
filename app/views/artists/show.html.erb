@@ -4,49 +4,30 @@
             <h1 class="title">
                 <%= @artist.name %>
             </h1>
-            <h2 class="subtitle is-6">
-            
-            </h2>
         </div>
     </div>
 </section>
 
-<% if @artist.image.attached? %>
-    <%= image_tag @artist.image, width: 200  %>
-<% end %>
-<h5><%= @genres %></h5>
-<h3>Artist Bio</h3>
-<p><%= @artist.description %></p>
-<h4><%= link_to @artist.website, @artist.website, target: :_blank %></h4>
-<% if user_signed_in? && @artist.user_id == current_user.id %>
-    <p><%= link_to "Edit", edit_artist_path(@artist) %></p>
-    <p><%= link_to "Delete", artist_path(@artist), method: :delete, data: { confirm: "Are you sure?" } %></p>
-<% end %>
-<hr>
-<h2>Songs by <%= @artist.name %>:</h2>
-
-<% if @artist.songs.size == 0 %>
-    <h4>Artist has not uploaded any songs yet</h4>
-    <% if user_signed_in? && @artist.user_id == current_user.id %>
-        <h3><%= link_to "UPLOAD YOUR FIRST SONG NOW!", new_song_path %></h3>
-    <% end %>
-<% else %>
-    <table>
-        <tr>
-            <th>SONG </th>
-            <th>DESCRIPTION </th>
-            <th>TAGS </th>
-            <th>AVAILABLE?</th>
-            <th>PRICE</th>
-        </tr>
-        <% @artist.songs.each do |song| %>
-            <tr>
-                <td><%= link_to song.name, song_path(song) %></td>
-                <td><%= song.description %></td>
-                <td><h5><%= song.genres.pluck(:name).join(", ") %></h5></td>
-                <td><%= song.available ? "Yes" : "No" %></td>
-                <td><%= song.available ? "$%.2f/$%.2f" % [song.price, song.exclusive_price] : "N/A" %></td>
-            </tr>
+<section class="section is-centered">
+    <div class="container">
+        <% if @artist.image.attached? %>
+            <%= image_tag @artist.image, width: 200%>
         <% end %>
-    </table>
-<% end %>
+        <h2 class="subtitle">Artist Bio</h2>
+        <p><strong><%= @artist.description %></strong></p>
+        <% if @artist.website? %>
+            <br><%= link_to "VISIT ARTIST WEBSITE", @artist.website, target: :_blank, class: "button is-link is-outlined" %>
+        <% end %>
+        <% if user_signed_in? && @artist.user_id == current_user.id %>
+            <br /><br />
+            <p><%= link_to "Edit", edit_artist_path(@artist), class: "button is-primary" %> 
+            <%= link_to "Delete", artist_path(@artist), method: :delete, data: { confirm: "Are you sure?" }, class: "button is-danger" %></p>
+        <% end %>
+        <hr>
+    </div>
+
+    <div class="container">
+        <h2 class="subtitle">Songs by <%= @artist.name %>:</h2>
+        <%= render partial: "shared/songs" %>
+    </div>
+</section>

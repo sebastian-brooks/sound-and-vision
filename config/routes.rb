@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   get "/purchases", to: "pages#purchases", as: "purchases"
   get "/user/:id/:role", to: "pages#change_role", as: "change_role"
   get "/search", to: "pages#search", as: "search"
-  post "/artist_song_search", to: "pages#artist_song_search", as: "artist_song_search"
-  post "/genre_search", to: "pages#genre_search", as: "genre_search"
+  post "/search_results/:type", to: "pages#search_results", as: "search_results"
+  get "/genre_songs/:genre", to: "pages#genre_songs", as: "genre_songs"
 end

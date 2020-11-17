@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   before_action :check_roles, only: [:admin]
   before_action :check_block, except: [:index]
-  before_action :authenticate_user!, except: [:index, :search]
+  before_action :authenticate_user!, except: [:index, :search, :search_results, :genre_songs]
 
   def index
   end
@@ -13,29 +13,30 @@ class PagesController < ApplicationController
   def search
   end
 
-  def artist_song_search
+  def search_results
     if params[:search].blank?
-      redirect_to(search_path, alert: "Empty field!")
-    else
-      @search = params[:search]
-      @results = Song.joins(:artist).search(params[:search]).order(:name).first(25)
+      redirect_to(search_path, alert: "EMPTY SEARCH FIELD")
+    end
+
+    @parameter = params[:search].downcase
+
+    @type = params[:type].to_i
+    case @type
+    when 0
+      @search_type = "genre"
+      @genres = Genre.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
+    when 1
+      @search_type = "song"
+      @songs = Song.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
+    when 2
+      @search_type = "artist"
+      @artists = Artist.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
     end
   end
 
-  def genre_search
-    if params[:search].blank?
-      redirect_to(search_path, alert: "Empty field!")
-    else
-      @parameter = params[:search].downcase
-      @results = Genre.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
-
-      @genre_songs = []
-      @results.each do |res|
-        if res.songs.size > 0
-          @genre_songs << res
-        end
-      end
-    end
+  def genre_songs
+    @genre = Genre.find(params[:genre]).name
+    @songs = Genre.find(params[:genre]).songs
   end
 
   def purchases
@@ -48,16 +49,15 @@ class PagesController < ApplicationController
   end
   
   def change_role
+    @user = User.find(params[:id])
+
     case params[:role].to_i
+    when 0
+      @user.has_role?(:admin) ? @user.remove_role(:admin) : @user.add_role(:admin)
     when 1
-      User.find(params[:id]).add_role(:admin)
-    when 2
-      User.find(params[:id]).remove_role(:admin)
-    when 3
-      User.find(params[:id]).add_role(:blocked)
-    when 4
-      User.find(params[:id]).remove_role(:blocked)
+      @user.has_role?(:blocked) ? @user.remove_role(:blocked) : @user.add_role(:blocked)
     end
+    
     redirect_to admin_path
   end
 

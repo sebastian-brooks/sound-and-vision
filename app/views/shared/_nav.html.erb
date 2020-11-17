@@ -11,6 +11,7 @@
       <div class="navbar-start">
         <%= link_to "songs", songs_path, class: "navbar-item" %>
         <%= link_to "artists", artists_path, class: "navbar-item" %>
+        <%= link_to "search", search_path, class: "navbar-item" %>
         <% if user_signed_in? %>
           <%= link_to "account", account_path, class: "navbar-item" %>
             <% if current_user.has_role?(:admin) %>

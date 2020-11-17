@@ -11,87 +11,113 @@
     </div>
 </section>
 
-<% if @song.artist.image.attached? %>
-    <%= image_tag @song.artist.image, width: 100  %>
-<% end %>
-<h4>by <%= link_to @song.artist.name, artist_path(@song.artist) %></h4>
-<h5>
-<%= @song_genres %>
-</h5>
-
-<% if @song.song_file.attached? && @song.available %>
-    <div>
-        <audio controls>
-            <source src=<%= url_for(@song.song_file) %> type="audio/mpeg">
-            <source src=<%= url_for(@song.song_file) %> type="audio/ogg">
-            <source src=<%= url_for(@song.song_file) %> type="audio/mpeg">
-        </audio>
-    </div>
-<% end %>
-
-<p><%= @song.description %></p>
-
-<p>Purchases: <%= @song.purchases %></p>
-
-<script src="https://js.stripe.com/v3/"></script>
-
-<% if @song.available %>
-    <% if @user_owned %>
-        <h4><%= link_to "You purchased this song on #{current_user.user_song.first.created_at}", purchases_path %></h4>
-    <% else %>
-        <h4>Price: $<%= "%.2f" % @song.price %> <button id="buynow">BUY!</button></h4>
-
-        <script>
-            const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>")
-            const buyButton = document.getElementById('buynow')
-
-            buyButton.addEventListener('click', function() {
-                fetch('<%= buy_path(@song.id, 1) %>', {
-                    method: 'POST'
-                })
-                .then(function(response) {
-                    return response.json()
-                })
-                .then(function(session) {
-                    return stripe.redirectToCheckout({ sessionId: session.id })
-                })
-            })
-        </script>
-    <% end %>
-    <% if @purchased && @sole_owner || !@purchased %>
-        <h4>Exclusive Purchase Price: $<%= "%.2f" % @song.exclusive_price %> <button id="excl">BUY!</button></h4>
-        <p>
-            Exclusive purchase prices are usually higher because once you purchase this song, it is no longer available for other users to buy - it is uniquely yours!
-            <br>
-            The artist grants you full use of this song provided you credit them as the composer.
+<section class="section is-centered">
+    <div class="container">
+        <p class="image is-128x128">
+            <% if @song.artist.image.attached? %>
+                <%= link_to image_tag(@song.artist.image, class: "is-rounded"), artist_path(@song.artist) %>
+            <% end %>
         </p>
 
-        <script>
-            const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>")
-            const buyButton2 = document.getElementById('excl')
+        <h4 class="subtitle is-4">by <%= link_to @song.artist.name, artist_path(@song.artist) %></h4>
 
-            buyButton2.addEventListener('click', function() {
-                fetch('<%= buy_path(@song.id, 2) %>', {
-                    method: 'POST'
-                })
-                .then(function(response) {
-                    return response.json()
-                })
-                .then(function(session) {
-                    return stripe.redirectToCheckout({ sessionId: session.id })
-                })
-            })
-        </script>
-    <% elsif @purchased && !@sole_owner %>
-        <p>Exclusive purchase unavailable</p>
-    <% end %>
-<% elsif !@song.available && !@user_owned %>
-    <h4>Song no longer available - already purchased exclusively</h4>
-<% elsif !@song.available && @user_owned %>
-    <h4>Congratulations - you own this song exclusively!</h4>
-<% end %>
+        <% if @song.song_file.attached? && @song.available %>
+            <div class="level">
+                <audio controls>
+                    <source src=<%= url_for(@song.song_file) %> type="audio/mpeg">
+                    <source src=<%= url_for(@song.song_file) %> type="audio/ogg">
+                    <source src=<%= url_for(@song.song_file) %> type="audio/mpeg">
+                </audio>
+            </div>
+        <% end %>
 
-<% if @song.artist.user_id == current_user.id %>
-    <p><%= link_to "Edit", edit_song_path(@song) %></p>
-    <p><%= link_to "Delete", song_path(@song), method: :delete, data: { confirm: "Are you sure?" } %></p>
-<% end %>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <span class="tag is-black"><%= @song_genres %></span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <%= @song.description %>
+        </div>
+
+        <script src="https://js.stripe.com/v3/"></script>
+
+        <% if @song.available %>
+            <div class="container">
+                <br />
+                <% if @user_owned %>
+                    <h4><%= link_to "You purchased this song on #{current_user.user_song.first.created_at}", purchases_path %></h4>
+                <% else %>
+                    <h4>Price: $<%= "%.2f" % @song.price %> <button id="buynow" class="button is-link">BUY!</button></h4>
+                    
+                    <script>
+                        const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>")
+                        const buyButton = document.getElementById('buynow')
+
+                        buyButton.addEventListener('click', function() {
+                            fetch('<%= buy_path(@song.id, 1) %>', {
+                                method: 'POST'
+                            })
+                            .then(function(response) {
+                                return response.json()
+                            })
+                            .then(function(session) {
+                                return stripe.redirectToCheckout({ sessionId: session.id })
+                            })
+                        })
+                    </script>
+                <% end %>
+            </div>
+            <div class="container">
+                <br />
+                <% if @purchased && @sole_owner || !@purchased %>
+                    <h4>Exclusive Purchase Price: $<%= "%.2f" % @song.exclusive_price %> <button id="excl" class="button is-link">BUY!</button></h4>
+                    <p>
+                        <i>Exclusive purchase prices are usually higher because once you purchase this song, it is no longer available for other users to buy - it is uniquely yours!
+                        <br>
+                        The artist grants you full use of this song provided you credit them as the composer.</i>
+                    </p>
+
+                    <script>
+                        const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>")
+                        const buyButton2 = document.getElementById('excl')
+
+                        buyButton2.addEventListener('click', function() {
+                            fetch('<%= buy_path(@song.id, 2) %>', {
+                                method: 'POST'
+                            })
+                            .then(function(response) {
+                                return response.json()
+                            })
+                            .then(function(session) {
+                                return stripe.redirectToCheckout({ sessionId: session.id })
+                            })
+                        })
+                    </script>
+                <% elsif @purchased && !@sole_owner %>
+                    <p>Exclusive purchase unavailable</p>
+                <% end %>
+            </div>
+        
+        <% elsif !@song.available && !@user_owned %>
+            <div class="container">
+                <h4>Song no longer available - already purchased exclusively</h4>
+            </div>
+        <% elsif !@song.available && @user_owned %>
+            <div class="container">
+                <h4>Congratulations - you own this song exclusively!</h4>
+            </div>
+        <% end %>
+
+        <% if @song.artist.user_id == current_user.id %>
+            <br /><br />
+            <p><%= link_to "Edit", edit_song_path(@song), class: "button is-primary" %> 
+                <%= link_to "Delete", song_path(@song), method: :delete, data: { confirm: "Are you sure?" }, class: "button is-danger" %></p>
+        <% end %>
+    </section>
+</section>
