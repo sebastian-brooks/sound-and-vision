@@ -5,33 +5,41 @@
                 MY ACCOUNT
             </h1>
             <h2 class="subtitle is-6">
-            
+                edit your details, find your purchases, view your artist profiles
             </h2>
         </div>
     </div>
 </section>
 
-<h4><%= "#{@user.first_name} #{@user.last_name} (#{@user.email})"%> <%= link_to "Edit", edit_user_registration_path %></h4>
+<section class="section is-centered">
+    <div class="container">
+        <article class="media">
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <h2 class="subtitle is-5"><strong><%= "#{@user.first_name} #{@user.last_name}" %></strong></h2>
+                        <%= @user.email %>
+                        <%= link_to "Edit", edit_user_registration_path, class: "button is-link is-outlined is-small" %>
+                    </p>
+                </div>
+            </div>
+        </article>
 
-<h3>MY PURCHASED SONGS</h3>
-<% if @user.songs.size > 0 %>
-    <p><%= link_to "View my purchases", purchases_path %></p>
-<% else %>
-    <p>You have not purchased any songs yet</p>
-<% end %>
-
-<h3>MY ARTIST & UPLOADED SONGS</h3>
-<% if @user.has_role?(:artist) %>
-    <% @artists.each do |artist| %>
-        <h4><%= image_tag artist.image, width: 50 %> <%= link_to artist.name, artist_path(artist) %></h4>
-        <% if artist.songs.size > 0 %>
-            <% artist.songs.each do |song| %>
-                <p><%= link_to song.name, song_path(song) %></p>
-            <% end %>
+        <hr>
+        
+        <% if @user.songs.size > 0 %>
+            <p><%= link_to "VIEW PURCHASED SONGS", purchases_path, class: "button is-link is-outlined" %></p>
         <% else %>
-            <p>No songs uploaded for this artist</p>
+            <p>You have not purchased any songs yet</p>
         <% end %>
-    <% end %>
-<% else %>
-    <p>You do not have an artist account. Create one <%= link_to "here", new_artist_path %> in order to upload your music.</p>
-<% end %>
+        
+        <hr>
+
+        <h3 class="subtitle is-4">MY ARTIST PROFILES</h3>
+        <% if @user.has_role?(:artist) %>
+            <%= render partial: "shared/artists" %>
+        <% else %>
+            <p>You do not have an artist account. Create one <%= link_to "here", new_artist_path %> in order to upload your music.</p>
+        <% end %>
+    </div>
+</section>

@@ -5,29 +5,44 @@
                 YOUR PURCHASED SONGS
             </h1>
             <h2 class="subtitle is-6">
-            
+                a list of all the songs you have purchased with download links
             </h2>
         </div>
     </div>
 </section>
 
-<table>
-    <tr>
-        <th></th>
-        <th>Artist</th>
-        <th>Song</th>
-        <th>Download</th>
-    </tr>
-    <% @user_songs.each do |song| %>
-        <tr>
-            <td>
-                <% if song.artist.image.attached? %>
-                    <%= image_tag song.artist.image, width: 50  %>
-                <% end %>
-            </td>
-            <td><%= link_to song.artist.name, artist_path(song.artist) %></td>
-            <td><%= song.name %></td>
-            <td><%= link_to "Download", rails_blob_path(song.song_file, disposition: 'attachment') %></td>
-        </tr>
-    <% end %>
-</table>
+<section class="section is-centered">
+    <div class="container">
+        <% @user_songs.each do |song| %>
+            <article class="media">
+                <figure class="media-left">
+                    <p class="image is-128x128">
+                        <% if song.artist.image.attached? %>
+                            <%= link_to image_tag(song.artist.image, class: "is-rounded"), song_path(song) %>
+                        <% end %>
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <span class="icon is-small"><%= image_tag "music.png" %></span>
+                            <strong><%= link_to song.name, song_path(song) %></strong><br>
+                            by <small><%= link_to song.artist.name, artist_path(song.artist) %></small>
+                            <br>
+                            <%= song.description %>
+                            <br>
+                            <span class="tag is-black"><%= song.genres.pluck(:name).join(", ") %></span>
+                        </p>
+                    </div>
+                    <nav class="level is-mobile">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <button class="button is-small"><%= link_to "Download", rails_blob_path(song.song_file, disposition: 'attachment') %></button>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </article>
+        <% end %>
+    </div>
+</section>

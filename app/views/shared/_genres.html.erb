@@ -3,7 +3,7 @@
         <div class="media-content">
             <div class="content">
                 <p>
-                    <strong><%= link_to genre.name, genre_songs_path(genre) %></strong>
+                    <strong><%= genre.name %></strong>
                 </p>
             </div>
             <nav class="level is-mobile">
@@ -11,9 +11,18 @@
                     <div class="level-item">
                         <small><%= genre.songs.count %> songs available</small>
                     </div>
-                    <div class="level-item">
-                        <button class="button is-small"><%= link_to "VIEW #{genre.name.upcase} SONGS", genre_songs_path(genre) %></button>
-                    </div>
+                    <% if controller_name != "genres" %>
+                        <div class="level-item">
+                            <button class="button is-small">
+                                <%= link_to "VIEW #{genre.name.upcase} SONGS", genre_songs_path(genre) %>
+                            </button>
+                        </div>
+                    <% elsif controller_name == "genres" %>
+                        <div class="level-item">
+                            <p><%= link_to "EDIT", edit_genre_path(genre), class: "button is-small is-primary" %> 
+                            <%= link_to "Delete", genre_path(genre), method: :delete, data: { confirm: "Are you sure?" }, class: "button is-small is-danger" %></p>
+                        </div>
+                    <% end %>
                 </div>
             </nav>
         </div>

@@ -4,21 +4,14 @@
             <h1 class="title">
                 GENRES
             </h1>
-            <h2 class="subtitle is-6">
-            
-            </h2>
         </div>
     </div>
 </section>
-<h3><%= link_to "Add genre", new_genre_path %></h3>
-<hr>
-<table>
-    <tr>
-        <th>Genre</th>
-    </tr>
-    <% @genres.each do |genre| %>
-        <tr>
-            <td><%= genre.name %> (<%= link_to "Edit", edit_genre_path(genre) %> | <%= link_to "Delete", genre_path(genre), method: :delete, data: { confirm: "Are you sure?" } %>)</td>
-        </tr>
-    <% end %>
-</table>
+
+<section class="section is-centered">
+    <div class="container">
+        <%= link_to "ADD GENRE", new_genre_path, class: "button is-medium is-link" %>
+        <hr>
+        <%= render partial: "shared/genres" %>
+    </div>
+</section>

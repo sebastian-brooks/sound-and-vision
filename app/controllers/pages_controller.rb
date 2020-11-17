@@ -25,12 +25,15 @@ class PagesController < ApplicationController
     when 0
       @search_type = "genre"
       @genres = Genre.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
+      @result_count = @genres.size
     when 1
       @search_type = "song"
       @songs = Song.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
+      @result_count = @songs.size
     when 2
       @search_type = "artist"
       @artists = Artist.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
+      @result_count = @artists.size
     end
   end
 

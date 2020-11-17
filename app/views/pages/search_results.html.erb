@@ -4,23 +4,25 @@
             <h1 class="title">
                 SEARCH
             </h1>
-            <h2 class="subtitle is-6">
-                <%= @search_type %> search results for "<%= @parameter %>""
+            <h2 class="subtitle is-4">
+                <%= @search_type %> search results for "<%= @parameter %>"
             </h2>
         </div>
     </div>
 </section>
 
 <section class="section is-centered">
-    <% if @type == 0 %>
-        <%= render partial: "shared/genres" %>
-    <% elsif @type == 1 %>
-        <%= render partial: "shared/songs" %>
-    <% elsif @type == 2 %>
-        <%= render partial: "shared/artists" %>
-    <% end %>
-</section>
+    <div class="container">
+        <p class="subtitle"><%= @result_count %> results found:</p>
+        <% if @type == 0 %>
+            <%= render partial: "shared/genres" %>
+        <% elsif @type == 1 %>
+            <%= render partial: "shared/songs" %>
+        <% elsif @type == 2 %>
+            <%= render partial: "shared/artists" %>
+        <% end %>
+    </div>
 
-<section class="section is-centered">
+    <br />
     <%= render partial: "shared/search" %>
 </section>
