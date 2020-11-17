@@ -1,7 +1,7 @@
 <section class="hero is-small is-dark">
   <div class="hero-body">
     <div class="container has-text-centered">
-      <h1 class="title">
+      <h1 class="title is-1">
         SOUND // VISION
       </h1>
       <h2 class="subtitle is-6">
@@ -11,9 +11,22 @@
   </div>
 </section>
 
+<%= image_tag "soundvision.png", class: "image", style: "width: 100%; height: 300px; object-fit: cover;" %>
+
 <section class="section is-centered">
-  <%= render partial: "shared/search_card" %>
   <div class="columns is-centered">
+    <div class="column has-text-centered">
+      <div class="card">
+        <div class="card-content">
+          <p class="title">
+            <%= link_to "SEARCH", search_path %>
+          </p>
+          <p class="subtitle is-6">
+            search genres // songs // artists
+          </p>
+          </div>
+        </div>
+      </div>
     <div class="column has-text-centered">
       <div class="card">
         <div class="card-content">

@@ -5,7 +5,7 @@ class ArtistsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @artists = Artist.all.first(25)
+    @artists = Artist.all.limit(25)
   end
 
   def show
