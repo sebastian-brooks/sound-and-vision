@@ -1,13 +1,9 @@
 class PagesController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :search, :search_results]
   before_action :check_roles, only: [:admin]
   before_action :check_block, except: [:index]
-  before_action :authenticate_user!, except: [:index, :search, :search_results, :genre_songs]
 
   def index
-  end
-
-  def admin
-    @users = User.all.where("id <> #{current_user.id}").first(25)
   end
 
   def search
@@ -37,18 +33,17 @@ class PagesController < ApplicationController
     end
   end
 
-  def genre_songs
-    @genre = Genre.find(params[:genre]).name
-    @songs = Genre.find(params[:genre]).songs
+  def account
+    @user = current_user
+    @artists = @user.artists if @user.has_role?(:artist)
   end
 
   def purchases
     @user_songs = current_user.songs if current_user.songs.size > 0
   end
 
-  def account
-    @user = current_user
-    @artists = @user.artists if @user.has_role?(:artist)
+  def admin
+    @users = User.all.where("id <> #{current_user.id}").first(25)
   end
   
   def change_role

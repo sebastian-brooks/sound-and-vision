@@ -4,25 +4,16 @@
             <h1 class="title">
                 SONGS
             </h1>
-            <h2 class="subtitle is-6">
-            
-            </h2>
         </div>
     </div>
-
-    <% if user_signed_in? && current_user.has_role?(:artist) %>
-        <div class="column has-text-centered">
-            <div class="card">
-                <div class="card-content">
-                    <p class="title">
-                        <%= link_to "UPLOAD SONG", new_song_path, class: "button is-large is-link" %>
-                    </p>
-                </div>
-            </div>
-        </div>
-    <% end %>
 </section>
 
 <section class="section is-centered">
-    <%= render partial: "shared/songs" %>
+    <div class="container">
+        <% if user_signed_in? && current_user.has_role?(:admin) %>
+            <%= link_to "UPLOAD SONG", new_song_path, class: "button is-medium is-link" %>
+            <hr>
+        <% end %>
+        <%= render partial: "shared/songs" %>
+    </div>
 </section>

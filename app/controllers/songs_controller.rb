@@ -1,6 +1,7 @@
 class SongsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:buy]
   before_action :authenticate_user!, except: [:buy, :index]
+  before_action :check_roles, only: [:new, :edit]
   before_action :check_block
   before_action :set_song, except: [:index, :new, :create]
   before_action :set_user_artists, only: [:new, :edit]
@@ -15,6 +16,33 @@ class SongsController < ApplicationController
     @user_owned = true if current_user.songs.include?(@song)
     @sole_owner = true if @song.users.size == 1 && @song.user_ids.include?(current_user.id)
     @song_genres = @song.genres.pluck(:name).join(", ")
+  end
+
+  def new
+    @song = Song.new
+  end
+
+  def create
+    song = Song.create(song_params)
+    if song.id.nil?
+      flash[:alert] = song.errors.full_messages.join(" | ").upcase
+      redirect_to new_song_path(song)
+    else
+      redirect_to song_path(song)
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    @song.update(song_params)
+    redirect_to song_path(@song)
+  end
+
+  def destroy
+    @song.destroy
+    redirect_to songs_path
   end
 
   def buy
@@ -70,33 +98,6 @@ class SongsController < ApplicationController
   def cancel
   end
 
-  def new
-    @song = Song.new
-  end
-
-  def create
-    song = Song.create(song_params)
-    if song.id.nil?
-      flash[:alert] = song.errors.full_messages.join(" | ").upcase
-      redirect_to new_song_path(song)
-    else
-      redirect_to song_path(song)
-    end
-  end
-
-  def edit
-  end
-
-  def update
-    @song.update(song_params)
-    redirect_to song_path(@song)
-  end
-
-  def destroy
-    @song.destroy
-    redirect_to songs_path
-  end
-
   private
 
   def set_song
@@ -118,6 +119,13 @@ class SongsController < ApplicationController
 
   def song_params
     params.require(:song).permit(:song_file, :name, :description, :price, :exclusive_price, :artist_id, genre_ids: [])
+  end
+
+  def check_roles
+    if user_signed_in? && !current_user.has_role?(:artist)
+      flash[:alert] = "You do not have access to that part of the site"
+      redirect_to songs_path
+    end
   end
 
   def check_block

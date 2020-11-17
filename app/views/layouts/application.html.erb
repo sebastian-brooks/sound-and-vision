@@ -14,10 +14,8 @@
 
   <body>
     <%= render partial: "shared/nav" %>
-    <div style="padding: 0.5%;">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><strong><%= alert %></strong></p>
-    </div>
+    <p class="notice" style="margin-left: 3%;"><%= notice %></p>
+    <p class="alert" style="margin-left: 3%;"><strong><%= alert %></strong></p>
     <%= yield %>
     <footer class="footer">
       <div class="content has-text-centered">

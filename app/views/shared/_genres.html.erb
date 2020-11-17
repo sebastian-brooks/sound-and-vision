@@ -11,15 +11,14 @@
                     <div class="level-item">
                         <small><%= genre.songs.count %> songs available</small>
                     </div>
-                    <% if controller_name != "genres" %>
+                    <div class="level-item">
+                        <button class="button is-small">
+                            <%= link_to "VIEW #{genre.name.upcase} SONGS", genre_songs_path(genre) %>
+                        </button>
+                    </div>
+                    <% if user_signed_in? && current_user.has_role?(:admin) %>
                         <div class="level-item">
-                            <button class="button is-small">
-                                <%= link_to "VIEW #{genre.name.upcase} SONGS", genre_songs_path(genre) %>
-                            </button>
-                        </div>
-                    <% elsif controller_name == "genres" %>
-                        <div class="level-item">
-                            <p><%= link_to "EDIT", edit_genre_path(genre), class: "button is-small is-primary" %> 
+                            <p><%= link_to "Edit", edit_genre_path(genre), class: "button is-small is-primary" %> 
                             <%= link_to "Delete", genre_path(genre), method: :delete, data: { confirm: "Are you sure?" }, class: "button is-small is-danger" %></p>
                         </div>
                     <% end %>

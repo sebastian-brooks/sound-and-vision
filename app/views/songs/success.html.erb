@@ -10,7 +10,7 @@
 
 <section class="section is-centered">
     <div class="container">
-        <h3 class="subtitle is-5">Thank you for buying <%= @song.name %> by <%= @song.artist.name %></h3>
+        <h3 class="subtitle is-5">Thank you for buying <strong><%= @song.name %></strong> by <strong><%= @song.artist.name %></strong></h3>
         <%= link_to "DOWNLOAD", rails_blob_path(@song.song_file, disposition: 'attachment'), class: "button is-link" %>
         <hr>
         <p>

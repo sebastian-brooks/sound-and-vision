@@ -10,8 +10,10 @@
 
 <section class="section is-centered">
     <div class="container">
-        <%= link_to "ADD GENRE", new_genre_path, class: "button is-medium is-link" %>
-        <hr>
+        <% if user_signed_in? && current_user.has_role?(:admin) %>
+            <%= link_to "ADD GENRE", new_genre_path, class: "button is-medium is-link" %>
+            <hr>
+        <% end %>
         <%= render partial: "shared/genres" %>
     </div>
 </section>

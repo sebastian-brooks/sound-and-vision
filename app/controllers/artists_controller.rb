@@ -1,8 +1,9 @@
 class ArtistsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :check_roles, only: [:new, :edit]
   before_action :check_block
   before_action :set_artist, only: [:show, :edit, :update, :destroy]
   before_action :set_user_artist, only: [:index]
-  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @artists = Artist.all.limit(25)
@@ -63,6 +64,13 @@ class ArtistsController < ApplicationController
 
   def artist_params
     params.require(:artist).permit(:name, :email, :description, :website, :image, :user_id)
+  end
+
+  def check_roles
+    if user_signed_in? && !current_user.has_role?(:artist)
+      flash[:alert] = "You do not have access to that part of the site"
+      redirect_to artists_path
+    end
   end
 
   def check_block
