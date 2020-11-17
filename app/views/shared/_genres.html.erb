@@ -16,14 +16,21 @@
                             <%= link_to "VIEW #{genre.name.upcase} SONGS", genre_songs_path(genre) %>
                         </button>
                     </div>
-                    <% if user_signed_in? && current_user.has_role?(:admin) %>
-                        <div class="level-item">
-                            <p><%= link_to "Edit", edit_genre_path(genre), class: "button is-small is-primary" %> 
-                            <%= link_to "Delete", genre_path(genre), method: :delete, data: { confirm: "Are you sure?" }, class: "button is-small is-danger" %></p>
-                        </div>
-                    <% end %>
+                    
                 </div>
             </nav>
+            <% if user_signed_in? && current_user.has_role?(:admin) %>
+                <nav class="level is-mobile">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <div class="level-item">
+                                <p><%= link_to "Edit", edit_genre_path(genre), class: "button is-small is-primary" %> 
+                                <%= link_to "Delete", genre_path(genre), method: :delete, data: { confirm: "Are you sure?" }, class: "button is-small is-danger" %></p>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            <% end %>
         </div>
     </article>
 <% end %>
