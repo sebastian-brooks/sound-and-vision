@@ -16,7 +16,6 @@
                             <%= link_to "VIEW #{genre.name.upcase} SONGS", genre_songs_path(genre) %>
                         </button>
                     </div>
-                    
                 </div>
             </nav>
             <% if user_signed_in? && current_user.has_role?(:admin) %>
