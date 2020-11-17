@@ -394,7 +394,7 @@ song_genres = [
     {song_id: 9, genre_id: rand(1..41)},
     {song_id: 9, genre_id: rand(1..41)},
     {song_id: 10, genre_id: rand(1..41)},
-    {song_id: 10, genre_id: rand(1..41)}
+    {song_id: 10, genre_id: rand(1..41)},
     {song_id: 10, genre_id: rand(1..41)},
     {song_id: 10, genre_id: rand(1..41)}
 ]
