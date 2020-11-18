@@ -6,7 +6,7 @@ class ArtistsController < ApplicationController
   before_action :set_user_artist, only: [:index]
 
   def index
-    @artists = Artist.all.limit(25)
+    @artists = Artist.paginate(page: params[:page], per_page: 3)
   end
 
   def show

@@ -64,3 +64,5 @@ gem "aws-sdk-s3", "~> 1.83"
 gem "stripe", "~> 5.28"
 
 gem 'activestorage-validator'
+
+gem 'will_paginate', '~> 3.3.0'
