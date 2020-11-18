@@ -12,28 +12,30 @@
 </section>
 
 <section class="section is-centered">
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email, class: "label" %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
-  </div>
+  <div class="container">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field">
+        <%= f.label :email, class: "label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password, class: "label" %>
-    <%= f.password_field :password, autocomplete: "current-password", class: "input" %>
-  </div>
+      <div class="field">
+        <%= f.label :password, class: "label" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "input" %>
+      </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me, class: "checkbox" %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          <%= f.check_box :remember_me, class: "checkbox" %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
 
-  <div class="actions">
-    <%= f.submit "LOG IN", class: "button is-link" %>
+      <div class="actions">
+        <%= f.submit "Log in", class: "button is-link" %>
+      </div>
+    <% end %>
+    <br>
+    <%= render "devise/shared/links" %>
   </div>
-<% end %>
-<br><br>
-<%= render "devise/shared/links" %>
 </section>
