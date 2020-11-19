@@ -17,12 +17,15 @@
     <div>
         <%= f.label :price, class: "label" %>
         <%= f.number_field :price, step: 0.1, class: "input" %>
+        <p class="help is-danger">
+            Minimum price is $0.80
+       </p><br />
     </div>
     <div>
         <%= f.label :exclusive_price, class: "label" %>
         <%= f.number_field :exclusive_price, step: 0.1, class: "input" %>
         <p class="help is-danger">
-             Exclusive purchases are a one-time purchase - the song can't be purchased again - so the exclusive price is usually set higher
+             Exclusive purchases are a one-time purchase - the song can't be purchased again - so the exclusive price is usually set higher (minimum is $1.00)
         </p><br />
     </div>
     <%= f.label :artist_id, class: "label" %>

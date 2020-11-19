@@ -152,6 +152,8 @@ artists = [
 Artist.destroy_all
 Artist.create!(artists)
 
+SongsGenre.destroy_all
+
 genres = [
     {name: "ambient"},
     {name: "electronic"},
@@ -207,6 +209,7 @@ songs = [
         exclusive_price: 10.00,
         purchases: 0,
         available: true,
+        genres: [Genre.find(rand(1..41)), Genre.find(rand(1..41)), Genre.find(rand(1..41))],
         artist_id: 1,
         song_file: {
             io: File.open("app/assets/audio/song1.mp3"),
@@ -222,6 +225,7 @@ songs = [
         exclusive_price: 999.00,
         purchases: 0,
         available: true,
+        genres: [Genre.find(rand(1..41)), Genre.find(rand(1..41)), Genre.find(rand(1..41))],
         artist_id: 2,
         song_file: {
             io: File.open("app/assets/audio/song1.mp3"),
@@ -233,10 +237,11 @@ songs = [
     {
         name: "Running Fields",
         description: "Like water torture but fun!",
-        price: 0.50,
+        price: 0.80,
         exclusive_price: 666.00,
         purchases: 0,
         available: true,
+        genres: [Genre.find(rand(1..41)), Genre.find(rand(1..41)), Genre.find(rand(1..41))],
         artist_id: 3,
         song_file: {
             io: File.open("app/assets/audio/song1.mp3"),
@@ -252,6 +257,7 @@ songs = [
         exclusive_price: 10000.00,
         purchases: 0,
         available: true,
+        genres: [Genre.find(rand(1..41)), Genre.find(rand(1..41)), Genre.find(rand(1..41))],
         artist_id: 4,
         song_file: {
             io: File.open("app/assets/audio/song1.mp3"),
@@ -267,6 +273,7 @@ songs = [
         exclusive_price: 420.00,
         purchases: 0,
         available: true,
+        genres: [Genre.find(rand(1..41)), Genre.find(rand(1..41)), Genre.find(rand(1..41))],
         artist_id: 5,
         song_file: {
             io: File.open("app/assets/audio/song1.mp3"),
@@ -282,6 +289,7 @@ songs = [
         exclusive_price: 67.00,
         purchases: 0,
         available: true,
+        genres: [Genre.find(rand(1..41)), Genre.find(rand(1..41)), Genre.find(rand(1..41))],
         artist_id: 6,
         song_file: {
             io: File.open("app/assets/audio/song1.mp3"),
@@ -297,6 +305,7 @@ songs = [
         exclusive_price: 27.50,
         purchases: 0,
         available: true,
+        genres: [Genre.find(rand(1..41)), Genre.find(rand(1..41)), Genre.find(rand(1..41))],
         artist_id: 7,
         song_file: {
             io: File.open("app/assets/audio/song1.mp3"),
@@ -312,6 +321,7 @@ songs = [
         exclusive_price: 10.00,
         purchases: 0,
         available: true,
+        genres: [Genre.find(rand(1..41)), Genre.find(rand(1..41)), Genre.find(rand(1..41))],
         artist_id: 8,
         song_file: {
             io: File.open("app/assets/audio/song1.mp3"),
@@ -327,6 +337,7 @@ songs = [
         exclusive_price: 80.00,
         purchases: 0,
         available: true,
+        genres: [Genre.find(rand(1..41)), Genre.find(rand(1..41)), Genre.find(rand(1..41))],
         artist_id: 9,
         song_file: {
             io: File.open("app/assets/audio/song1.mp3"),
@@ -342,6 +353,7 @@ songs = [
         exclusive_price: 888.00,
         purchases: 0,
         available: true,
+        genres: [Genre.find(rand(1..41)), Genre.find(rand(1..41)), Genre.find(rand(1..41))],
         artist_id: 10,
         song_file: {
             io: File.open("app/assets/audio/song1.mp3"),
@@ -355,49 +367,3 @@ songs = [
 
 Song.destroy_all
 Song.create!(songs)
-
-song_genres = [
-    {song_id: 1, genre_id: rand(1..41)},
-    {song_id: 1, genre_id: rand(1..41)},
-    {song_id: 1, genre_id: rand(1..41)},
-    {song_id: 1, genre_id: rand(1..41)},
-    {song_id: 2, genre_id: rand(1..41)},
-    {song_id: 2, genre_id: rand(1..41)},
-    {song_id: 2, genre_id: rand(1..41)},
-    {song_id: 2, genre_id: rand(1..41)},
-    {song_id: 3, genre_id: rand(1..41)},
-    {song_id: 3, genre_id: rand(1..41)},
-    {song_id: 3, genre_id: rand(1..41)},
-    {song_id: 3, genre_id: rand(1..41)},
-    {song_id: 4, genre_id: rand(1..41)},
-    {song_id: 4, genre_id: rand(1..41)},
-    {song_id: 4, genre_id: rand(1..41)},
-    {song_id: 4, genre_id: rand(1..41)},
-    {song_id: 5, genre_id: rand(1..41)},
-    {song_id: 5, genre_id: rand(1..41)},
-    {song_id: 5, genre_id: rand(1..41)},
-    {song_id: 5, genre_id: rand(1..41)},
-    {song_id: 6, genre_id: rand(1..41)},
-    {song_id: 6, genre_id: rand(1..41)},
-    {song_id: 6, genre_id: rand(1..41)},
-    {song_id: 6, genre_id: rand(1..41)},
-    {song_id: 7, genre_id: rand(1..41)},
-    {song_id: 7, genre_id: rand(1..41)},
-    {song_id: 7, genre_id: rand(1..41)},
-    {song_id: 7, genre_id: rand(1..41)},
-    {song_id: 8, genre_id: rand(1..41)},
-    {song_id: 8, genre_id: rand(1..41)},
-    {song_id: 8, genre_id: rand(1..41)},
-    {song_id: 8, genre_id: rand(1..41)},
-    {song_id: 9, genre_id: rand(1..41)},
-    {song_id: 9, genre_id: rand(1..41)},
-    {song_id: 9, genre_id: rand(1..41)},
-    {song_id: 9, genre_id: rand(1..41)},
-    {song_id: 10, genre_id: rand(1..41)},
-    {song_id: 10, genre_id: rand(1..41)},
-    {song_id: 10, genre_id: rand(1..41)},
-    {song_id: 10, genre_id: rand(1..41)}
-]
-
-SongsGenre.destroy_all
-SongsGenre.create!(song_genres)
