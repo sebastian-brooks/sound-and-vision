@@ -14,3 +14,9 @@
 <section class="section is-centered">
     <%= render partial: "shared/songs" %>
 </section>
+
+<section class="section is-centered">
+    <div class="container">
+        <%= will_paginate @songs %>
+    </div>
+</section>

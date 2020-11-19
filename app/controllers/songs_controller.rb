@@ -1,14 +1,15 @@
 class SongsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:buy]
   before_action :authenticate_user!, except: [:buy, :index]
-  before_action :check_roles, only: [:new, :edit]
+  before_action :check_role, only: [:new]
+  before_action :check_artist, only: [:edit]
   before_action :check_block
   before_action :set_song, except: [:index, :new, :create]
   before_action :set_user_artists, only: [:new, :edit]
   before_action :set_genres, only: [:show, :edit, :update, :new]
 
   def index
-    @songs = Song.where(available: true).first(25)
+    @songs = Song.paginate(page: params[:page], per_page: 9).includes(:genres, artist: :image_blob).order(:name)
   end
 
   def show
@@ -48,9 +49,10 @@ class SongsController < ApplicationController
   def buy
     price = nil
 
-    if params[:type] == "1"
+    case params[:type].to_i
+    when 1
       price = @song.price
-    elsif params[:type] == "2"
+    when 2
       price = @song.exclusive_price
     end
     
@@ -86,13 +88,12 @@ class SongsController < ApplicationController
       @song.update_attribute(:available, false)
     end
     
-    if !current_user.songs.include?(@song)
+    if current_user.songs.include?(@song)
       @song.increment!(:purchases)
       UserSong.create(user_id: current_user.id, song_id: @song.id)
+      UserMailer.purchase_email(current_user, @song, params[:type]).deliver
+      UserMailer.artist_purchase_notification(@song, params[:type]).deliver
     end
-    
-    UserMailer.purchase_email(current_user, @song, params[:type]).deliver
-    UserMailer.artist_purchase_notification(@song, params[:type]).deliver
   end
 
   def cancel
@@ -101,12 +102,7 @@ class SongsController < ApplicationController
   private
 
   def set_song
-    @song = Song.find(params[:id])
-  end
-
-  def set_song_artist
-    song = set_song
-    @artist = song.artist_id
+    @song = Song.includes(:genres, artist: :image_blob).find(params[:id])
   end
 
   def set_user_artists
@@ -121,15 +117,22 @@ class SongsController < ApplicationController
     params.require(:song).permit(:song_file, :name, :description, :price, :exclusive_price, :artist_id, genre_ids: [])
   end
 
-  def check_roles
-    if user_signed_in? && !current_user.has_role?(:artist)
-      flash[:alert] = "You do not have access to that part of the site"
+  def check_role
+    if user_signed_in? && !@rolls.include?("artist")
+      flash[:alert] = "You need to have an artist profile in order to do that"
+      redirect_to songs_path
+    end
+  end
+
+  def check_artist
+    if user_signed_in? && !(@usr.id == Song.find(params[:id].to_i).artist.user_id)
+      flash[:alert] = "Only the artist can edit their own song"
       redirect_to songs_path
     end
   end
 
   def check_block
-    if user_signed_in? && current_user.has_role?(:blocked)
+    if user_signed_in? && @rolls.include?("blocked")
       flash[:alert] = "Your account has been blocked. Please contact an administrator"
       redirect_to root_path
     end

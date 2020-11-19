@@ -11,14 +11,14 @@
 <section class="section is-centered">
     <div class="container">
         <% if @artist.image.attached? %>
-            <%= image_tag @artist.image, width: 200%>
+            <%= image_tag @artist.image, width: 200 %>
         <% end %>
         <h2 class="subtitle">Artist Bio</h2>
         <p><strong><%= @artist.description %></strong></p>
         <% if @artist.website? %>
             <br><%= link_to "VISIT ARTIST WEBSITE", @artist.website, target: :_blank, class: "button is-link is-outlined" %>
         <% end %>
-        <% if user_signed_in? && @artist.user_id == current_user.id %>
+        <% if user_signed_in? && (@artist.user_id == current_user.id || current_user.has_role?(:admin)) %>
             <br /><br />
             <p><%= link_to "Edit", edit_artist_path(@artist), class: "button is-primary" %> 
             <%= link_to "Delete", artist_path(@artist), method: :delete, data: { confirm: "Are you sure?" }, class: "button is-danger" %></p>
@@ -30,4 +30,9 @@
         <h2 class="subtitle">Songs by <%= @artist.name %>:</h2>
         <%= render partial: "shared/songs" %>
     </div>
+    <section class="section is-centered">
+        <div class="container">
+            <%= will_paginate @songs %>
+        </div>
+    </section>
 </section>

@@ -1,11 +1,12 @@
 class GenresController < ApplicationController
   before_action :authenticate_user!, except: [:index, :genre_songs]
-  before_action :check_roles, only: [:new, :edit]
+  before_action :check_role, only: [:new, :edit]
   before_action :check_block
   before_action :set_genre, except: [:index, :new, :create, :genre_songs]
 
   def index
-    @genres = Genre.all.order(:name)
+    @genres = Genre.paginate(page: params[:page], per_page: 9).includes(:songs).order(:name)
+    @roll = (user_signed_in? && @rolls.include?("admin"))
   end
 
   def show
@@ -41,28 +42,28 @@ class GenresController < ApplicationController
 
   def genre_songs
     @genre_name = Genre.find(params[:genre]).name
-    @songs = Genre.find(params[:genre]).songs
+    @songs = Genre.find(params[:genre]).songs.paginate(page: params[:page], per_page: 9).includes(:genres, artist: :image_blob).order(:name)
   end
 
   private
   
-  def check_roles
-    if user_signed_in? && !current_user.has_role?(:admin)
+  def set_genre
+    @genre = Genre.find(params[:id])
+  end
+  
+  def genre_params
+    params.require(:genre).permit(:name)
+  end
+  
+  def check_role
+    if user_signed_in? && !@rolls.include?("admin")
       flash[:alert] = "You do not have access to that part of the site"
       redirect_to genres_path
     end
   end
 
-  def set_genre
-    @genre = Genre.find(params[:id])
-  end
-
-  def genre_params
-    params.require(:genre).permit(:name)
-  end
-
   def check_block
-    if user_signed_in? && current_user.has_role?(:blocked)
+    if user_signed_in? && @rolls.include?("blocked")
       flash[:alert] = "Your account has been blocked. Please contact an administrator"
       redirect_to root_path
     end

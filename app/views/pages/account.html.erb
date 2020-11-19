@@ -36,10 +36,16 @@
         <hr>
 
         <h3 class="subtitle is-4">MY ARTIST PROFILES</h3>
-        <% if @user.has_role?(:artist) %>
+        <% if @rolls.include?("artist") %>
             <%= render partial: "shared/artists" %>
         <% else %>
             <p>You do not have an artist account. Create one <%= link_to "here", new_artist_path %> in order to upload your music.</p>
         <% end %>
+    </div>
+</section>
+
+<section class="section is-centered">
+    <div class="container">
+        <%= will_paginate @artists %>
     </div>
 </section>

@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :search, :search_results]
+  before_action :check_purchase, only: [:purchases]
   before_action :check_roles, only: [:admin]
   before_action :check_block, except: [:index]
 
@@ -20,30 +21,30 @@ class PagesController < ApplicationController
     case @type
     when 0
       @search_type = "genre"
-      @genres = Genre.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
+      @genres = Genre.includes(:songs).order(:name).where("lower(name) LIKE :search", search: "%#{@parameter}%")
       @result_count = @genres.size
     when 1
       @search_type = "song"
-      @songs = Song.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
+      @songs = Song.includes(:genres, artist: :image_blob).order(:name).where("lower(name) LIKE :search", search: "%#{@parameter}%")
       @result_count = @songs.size
     when 2
       @search_type = "artist"
-      @artists = Artist.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
+      @artists = Artist.includes(:songs).with_attached_image.order(:name).where("lower(name) LIKE :search", search: "%#{@parameter}%")
       @result_count = @artists.size
     end
   end
 
   def account
-    @user = current_user
-    @artists = @user.artists if @user.has_role?(:artist)
+    @user = @usr
+    @artists = @user.artists.paginate(page: params[:page], per_page: 9).includes(:songs).with_attached_image.order(:name) if @rolls.include?("artist")
   end
 
   def purchases
-    @user_songs = current_user.songs if current_user.songs.size > 0
+    @user_songs = current_user.songs.paginate(page: params[:page], per_page: 9).includes(:genres, artist: :image_blob).order(:name)
   end
 
   def admin
-    @users = User.all.where("id <> #{current_user.id}").first(25)
+    @users = User.paginate(page: params[:page], per_page: 9).includes(:roles).where("id <> #{current_user.id}").order(:first_name)
   end
   
   def change_role
@@ -51,9 +52,11 @@ class PagesController < ApplicationController
 
     case params[:role].to_i
     when 0
-      @user.has_role?(:admin) ? @user.remove_role(:admin) : @user.add_role(:admin)
+      @rolls.include?("admin") ? @user.remove_role(:admin) : @user.add_role(:admin)
     when 1
-      @user.has_role?(:blocked) ? @user.remove_role(:blocked) : @user.add_role(:blocked)
+      @rolls.include?("artist") ? @user.remove_role(:artist) : @user.add_role(:artist)
+    when 2
+      @rolls.include?("blocked") ? @user.remove_role(:blocked) : @user.add_role(:blocked)
     end
     
     redirect_to admin_path
@@ -62,14 +65,21 @@ class PagesController < ApplicationController
   private
 
   def check_roles
-    if user_signed_in? && !current_user.has_role?(:admin)
+    if user_signed_in? && !@rolls.include?("admin")
       flash[:alert] = "You do not have access to that part of the site"
       redirect_to root_path
     end
   end
 
+  def check_purchase
+    if current_user.songs.size == 0
+      flash[:alert] = "You do not have any purchases"
+      redirect_to account_path
+    end
+  end
+
   def check_block
-    if user_signed_in? && current_user.has_role?(:blocked)
+    if user_signed_in? && @rolls.include?("blocked")
       flash[:alert] = "Your account has been blocked. Please contact an administrator"
       redirect_to root_path
     end

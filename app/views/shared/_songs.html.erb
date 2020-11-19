@@ -1,7 +1,7 @@
 <% @songs.each do |song| %>
     <article class="media">
         <figure class="media-left">
-            <p class="image is-128x128">
+            <p class="image is-64x64">
                 <% if song.artist.image.attached? %>
                     <%= link_to image_tag(song.artist.image, class: "is-rounded"), song_path(song) %>
                 <% end %>

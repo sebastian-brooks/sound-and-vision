@@ -10,10 +10,16 @@
 
 <section class="section is-centered">
     <div class="container">
-        <% if user_signed_in? && current_user.has_role?(:admin) %>
+        <% if user_signed_in? && current_user.has_role?(:artist) %>
             <%= link_to "UPLOAD SONG", new_song_path, class: "button is-medium is-link" %>
             <hr>
         <% end %>
         <%= render partial: "shared/songs" %>
+    </div>
+</section>
+
+<section class="section is-centered">
+    <div class="container">
+        <%= will_paginate @songs %>
     </div>
 </section>

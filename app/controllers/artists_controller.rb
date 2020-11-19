@@ -1,16 +1,15 @@
 class ArtistsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :check_roles, only: [:new, :edit]
+  before_action :check_role, only: [:edit]
   before_action :check_block
   before_action :set_artist, only: [:show, :edit, :update, :destroy]
-  before_action :set_user_artist, only: [:index]
 
   def index
-    @artists = Artist.paginate(page: params[:page], per_page: 3)
+    @artists = Artist.paginate(page: params[:page], per_page: 9).includes(:songs).with_attached_image.order(:name)
   end
 
   def show
-    @songs = @artist.songs
+    @songs = @artist.songs.paginate(page: params[:page], per_page: 9).includes(:genres)
   end
 
   def new
@@ -53,28 +52,22 @@ class ArtistsController < ApplicationController
   private
 
   def set_artist
-    @artist = Artist.find(params[:id])
-  end
-
-  def set_user_artist
-    if user_signed_in? && current_user.has_role?(:artist)
-      @user_artist = Artist.where(user_id: current_user)
-    end
+    @artist = Artist.includes(image_attachment: :blob).find(params[:id])
   end
 
   def artist_params
     params.require(:artist).permit(:name, :email, :description, :website, :image, :user_id)
   end
 
-  def check_roles
-    if user_signed_in? && !current_user.has_role?(:artist)
-      flash[:alert] = "You do not have access to that part of the site"
+  def check_role
+    if user_signed_in? && !(@rolls.include?("admin") || @usr.artists.ids.include?(params[:id].to_i))
+      flash[:alert] = "Only the artist can edit their profile"
       redirect_to artists_path
     end
   end
 
   def check_block
-    if user_signed_in? && current_user.has_role?(:blocked)
+    if user_signed_in? && @rolls.include?("blocked")
       flash[:alert] = "Your account has been blocked. Please contact an administrator"
       redirect_to root_path
     end
