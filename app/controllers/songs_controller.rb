@@ -89,7 +89,7 @@ class SongsController < ApplicationController
       @song.update_attribute(:available, false)
     end
     
-    if current_user.songs.include?(@song)
+    if !current_user.songs.ids.include?(@song.id)
       @song.increment!(:purchases)
       UserSong.create(user_id: current_user.id, song_id: @song.id)
       UserMailer.purchase_email(current_user, @song, params[:type]).deliver
