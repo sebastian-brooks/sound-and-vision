@@ -52,11 +52,11 @@ class PagesController < ApplicationController
 
     case params[:role].to_i
     when 0
-      @rolls.include?("admin") ? @user.remove_role(:admin) : @user.add_role(:admin)
+      @user.has_role?(:admin) ? @user.remove_role(:admin) : @user.add_role(:admin)
     when 1
-      @rolls.include?("artist") ? @user.remove_role(:artist) : @user.add_role(:artist)
+      @user.has_role?(:artist) ? @user.remove_role(:artist) : @user.add_role(:artist)
     when 2
-      @rolls.include?("blocked") ? @user.remove_role(:blocked) : @user.add_role(:blocked)
+      @user.has_role?(:blocked) ? @user.remove_role(:blocked) : @user.add_role(:blocked)
     end
     
     redirect_to admin_path
