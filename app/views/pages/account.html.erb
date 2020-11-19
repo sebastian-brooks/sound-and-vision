@@ -44,8 +44,10 @@
     </div>
 </section>
 
-<section class="section is-centered">
-    <div class="container">
-        <%= will_paginate @artists %>
-    </div>
-</section>
+<% if @rolls.include?("artist") %>
+    <section class="section is-centered">
+        <div class="container">
+            <%= will_paginate @artists %>
+        </div>
+    </section>
+<% end %>

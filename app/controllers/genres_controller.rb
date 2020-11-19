@@ -5,6 +5,7 @@ class GenresController < ApplicationController
   before_action :set_genre, except: [:index, :new, :create, :genre_songs]
 
   def index
+    # select all genres & their associated songs, order results by genre name
     @genres = Genre.paginate(page: params[:page], per_page: 9).includes(:songs).order(:name)
     @roll = (user_signed_in? && @rolls.include?("admin"))
   end
@@ -41,13 +42,17 @@ class GenresController < ApplicationController
   end
 
   def genre_songs
+    # select name from genre model where id is params id
     @genre_name = Genre.find(params[:genre]).name
+
+    # select songs related to each specific genre including each individual songs genres & the associated artist's image & order results by genre name
     @songs = Genre.find(params[:genre]).songs.paginate(page: params[:page], per_page: 9).includes(:genres, artist: :image_blob).order(:name)
   end
 
   private
   
   def set_genre
+    # selects genre by id
     @genre = Genre.find(params[:id])
   end
   

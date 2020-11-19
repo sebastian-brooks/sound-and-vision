@@ -9,6 +9,7 @@ class SongsController < ApplicationController
   before_action :set_genres, only: [:show, :edit, :update, :new]
 
   def index
+    # select all songs & their related genres and artist's image, order results by song name
     @songs = Song.paginate(page: params[:page], per_page: 9).includes(:genres, artist: :image_blob).order(:name)
   end
 
@@ -102,14 +103,17 @@ class SongsController < ApplicationController
   private
 
   def set_song
+    # selects song by id & includes related genres and artist image
     @song = Song.includes(:genres, artist: :image_blob).find(params[:id])
   end
 
   def set_user_artists
+    # select artist with a user_id matching current user id
     @artists = Artist.where(user_id: current_user.id)
   end
 
   def set_genres
+    # selects all genres
     @genres = Genre.all
   end
 

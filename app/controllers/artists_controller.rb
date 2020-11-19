@@ -5,10 +5,12 @@ class ArtistsController < ApplicationController
   before_action :set_artist, only: [:show, :edit, :update, :destroy]
 
   def index
+    # select all artists with attached images & their associated songs, ordering results by artist name
     @artists = Artist.paginate(page: params[:page], per_page: 9).includes(:songs).with_attached_image.order(:name)
   end
 
   def show
+    # select all artist songs with their genres
     @songs = @artist.songs.paginate(page: params[:page], per_page: 9).includes(:genres)
   end
 
@@ -52,6 +54,7 @@ class ArtistsController < ApplicationController
   private
 
   def set_artist
+    # selects artist including artist image by id
     @artist = Artist.includes(image_attachment: :blob).find(params[:id])
   end
 
